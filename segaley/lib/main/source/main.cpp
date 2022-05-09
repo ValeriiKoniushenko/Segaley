@@ -43,8 +43,8 @@ int main()
 	GLuint vao = Gl::Vao::generate();
 	Gl::Vao::bind( vao );
 
-	glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof( float ), ( void* )0 );
-	glEnableVertexAttribArray( 0 );
+	Gl::vertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof( float ), ( void* )0 );
+	Gl::enableVertexAttribArray( 0 );
 
 	auto& wnd = Window::instance();
 	while ( wnd.isOpen() )
@@ -52,7 +52,7 @@ int main()
 		wnd.pollEvents();
 		wnd.clearScreen( Window::Buffer::Color, RGBAf( 0.2f, 0.3f, 0.3f, 1.f ) );
 		
-		glDrawArrays( GL_TRIANGLES, 0, 3 );
+		Gl::drawArrays( Gl::DrawMode::Triangles, 0, 3 );
 
 		wnd.swapBuffers();
 	}

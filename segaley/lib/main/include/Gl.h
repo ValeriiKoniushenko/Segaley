@@ -30,6 +30,18 @@ public:
 		ActiveUniforms = GL_ACTIVE_UNIFORMS
 	};
 
+	enum class DrawMode
+	{
+		Points = GL_POINTS,
+		Lines = GL_LINES,
+		LineLoop = GL_LINE_LOOP,
+		LineStrip = GL_LINE_STRIP,
+		Triangles = GL_TRIANGLES,
+		TriangleStrip = GL_TRIANGLE_STRIP,
+		TriangleFan = GL_TRIANGLE_FAN,
+		Quads = GL_QUADS
+	};
+
 	static void gladInitialization();
 	static GLFWwindow* createWindow( unsigned short width, unsigned short height, const std::string& title );
 
@@ -46,6 +58,10 @@ public:
 	static void attachShader( GLuint program, GLuint shader ) noexcept;
 	static void linkProgram( GLuint program );
 
+	static void vertexAttribPointer( GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void* pointer );
+	static void enableVertexAttribArray( GLuint index ) noexcept;
+
+	static void drawArrays( DrawMode mode, GLint first, GLsizei count );
 
 	class Vbo final
 	{

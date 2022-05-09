@@ -109,6 +109,27 @@ void Gl::linkProgram( GLuint program )
 		throw std::runtime_error( "Can not compile shader program: " + getProgramInfoLog( program ) );
 }
 
+void Gl::vertexAttribPointer( GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void* pointer )
+{
+	if ( !Vao::isBind() )
+		throw std::runtime_error( "Impossible to configure the vertex attribute pointer without a bound VAO. Try to bind a VAO and try again." );
+
+	glVertexAttribPointer( index, size, type, normalized, stride, pointer );
+}
+
+void Gl::enableVertexAttribArray( GLuint index ) noexcept
+{
+	glEnableVertexAttribArray( index );
+}
+
+void Gl::drawArrays( DrawMode mode, GLint first, GLsizei count )
+{
+	if ( !Vao::isBind() )
+		throw std::runtime_error( "Impossible to draw without a bound VAO. Bind a VAO and try again." );
+
+	glDrawArrays( static_cast< GLenum >( mode ), first, count );
+}
+
 GLuint Gl::Vbo::generate() noexcept
 {
 	GLuint vbo = 0;
