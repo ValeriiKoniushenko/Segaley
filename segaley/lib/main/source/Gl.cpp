@@ -2,6 +2,8 @@
 
 #include <stdexcept>
 
+Gl::Vbo::BoundBuffer Gl::Vbo::bound_;
+
 void Gl::gladInitialization()
 {
 	if ( !glfwGetCurrentContext() )
@@ -63,4 +65,55 @@ GLuint Gl::Vbo::genBuffer() noexcept
 	GLuint vbo = 0;
 	glGenBuffers( 1, &vbo );
 	return vbo;
+}
+
+void Gl::Vbo::bindBuffer( Target target, GLuint buffer ) noexcept
+{
+	glBindBuffer( static_cast< GLenum >( target ), buffer );
+
+	switch ( target )
+	{
+	case Gl::Vbo::Target::Array:
+		bound_.arrayBuffer = buffer;
+		break;
+	case Gl::Vbo::Target::AtomicCounter:
+		bound_.atomicCounterBuffer = buffer;
+		break;
+	case Gl::Vbo::Target::CopyRead:
+		bound_.copyReadBuffer = buffer;
+		break;
+	case Gl::Vbo::Target::CopyWrite:
+		bound_.copyWriteBuffer = buffer;
+		break;
+	case Gl::Vbo::Target::DispatchIndirect:
+		bound_.dispatchIndirectBuffer = buffer;
+		break;
+	case Gl::Vbo::Target::DrawIndirect:
+		bound_.drawIndirectBuffer = buffer;
+		break;
+	case Gl::Vbo::Target::ElementArray:
+		bound_.elementArrayBuffer = buffer;
+		break;
+	case Gl::Vbo::Target::PixelPack:
+		bound_.pixelPackBuffer = buffer;
+		break;
+	case Gl::Vbo::Target::PixelUnpack:
+		bound_.pixelUnpackBuffer = buffer;
+		break;
+	case Gl::Vbo::Target::Query:
+		bound_.queryBuffer = buffer;
+		break;
+	case Gl::Vbo::Target::ShaderStorage:
+		bound_.shaderStorageBuffer = buffer;
+		break;
+	case Gl::Vbo::Target::Texture:
+		bound_.textureBuffer = buffer;
+		break;
+	case Gl::Vbo::Target::TransformFeedback:
+		bound_.transformFeedbackBuffer = buffer;
+		break;
+	case Gl::Vbo::Target::Uniform:
+		bound_.uniformBuffer = buffer;
+		break;
+	}
 }

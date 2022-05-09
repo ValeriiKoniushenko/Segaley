@@ -24,7 +24,7 @@ int main()
 	};
 
 	auto vbo = Gl::Vbo::genBuffer();
-	glBindBuffer( GL_ARRAY_BUFFER, vbo );
+	Gl::Vbo::bindBuffer( Gl::Vbo::Target::Array, vbo );
 	glBufferData( GL_ARRAY_BUFFER, sizeof( verticies ), verticies, GL_STATIC_DRAW );
 
 	auto& wnd = Window::instance();

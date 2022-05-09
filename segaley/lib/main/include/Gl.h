@@ -36,7 +36,46 @@ public:
 	class Vbo final
 	{
 	public:
+
+		enum class Target
+		{
+			Array = GL_ARRAY_BUFFER,
+			AtomicCounter = GL_ATOMIC_COUNTER_BUFFER,
+			CopyRead = GL_COPY_READ_BUFFER,
+			CopyWrite = GL_COPY_WRITE_BUFFER,
+			DispatchIndirect = GL_DISPATCH_INDIRECT_BUFFER,
+			DrawIndirect = GL_DRAW_INDIRECT_BUFFER,
+			ElementArray = GL_ELEMENT_ARRAY_BUFFER,
+			PixelPack = GL_PIXEL_PACK_BUFFER,
+			PixelUnpack = GL_PIXEL_UNPACK_BUFFER,
+			Query = GL_QUERY_BUFFER,
+			ShaderStorage = GL_SHADER_STORAGE_BUFFER,
+			Texture = GL_TEXTURE_BUFFER,
+			TransformFeedback = GL_TRANSFORM_FEEDBACK_BUFFER,
+			Uniform = GL_UNIFORM_BUFFER
+		};
+
+	public:
 		static GLuint genBuffer() noexcept;
+		static void bindBuffer( Target target, GLuint buffer ) noexcept;
+
 	private:
+		static struct BoundBuffer final
+		{
+			GLuint arrayBuffer = 0;
+			GLuint atomicCounterBuffer = 0;
+			GLuint copyReadBuffer = 0;
+			GLuint copyWriteBuffer = 0;
+			GLuint dispatchIndirectBuffer = 0;
+			GLuint drawIndirectBuffer = 0;
+			GLuint elementArrayBuffer = 0;
+			GLuint pixelPackBuffer = 0;
+			GLuint pixelUnpackBuffer = 0;
+			GLuint queryBuffer = 0;
+			GLuint shaderStorageBuffer = 0;
+			GLuint textureBuffer = 0;
+			GLuint transformFeedbackBuffer = 0;
+			GLuint uniformBuffer = 0;
+		} bound_;
 	};
 };
