@@ -23,8 +23,7 @@ int main()
 		 0.0f,  0.5f, 0.0f
 	};
 
-	GLuint vbo;
-	glGenBuffers( 1, &vbo );
+	auto vbo = Gl::Vbo::genBuffer();
 	glBindBuffer( GL_ARRAY_BUFFER, vbo );
 	glBufferData( GL_ARRAY_BUFFER, sizeof( verticies ), verticies, GL_STATIC_DRAW );
 

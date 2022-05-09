@@ -32,4 +32,11 @@ public:
 	static void compileShader( GLuint shader );
 	static GLint getShaderiv( GLuint shader, Parameter parameter ) noexcept;
 	static std::string getShaderInfoLog( GLuint shader ) noexcept;
+
+	class Vbo final
+	{
+	public:
+		static GLuint genBuffer() noexcept;
+	private:
+	};
 };

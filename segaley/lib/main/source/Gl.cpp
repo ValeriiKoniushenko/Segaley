@@ -57,3 +57,10 @@ std::string Gl::getShaderInfoLog( GLuint shader ) noexcept
 	glGetShaderInfoLog( shader, bufferLength, &logLength, message.get() );
 	return message.get();
 }
+
+GLuint Gl::Vbo::genBuffer() noexcept
+{
+	GLuint vbo = 0;
+	glGenBuffers( 1, &vbo );
+	return vbo;
+}
