@@ -70,7 +70,19 @@ GLuint Gl::Vbo::genBuffer() noexcept
 void Gl::Vbo::bindBuffer( Target target, GLuint buffer ) noexcept
 {
 	glBindBuffer( static_cast< GLenum >( target ), buffer );
+	bound_.setBuffer( target, buffer );
+}
 
+void Gl::Vbo::bufferData( Target target, GLsizeiptr size, const void* data, DrawType drawType )
+{
+	if ( !bound_.isSetBuffer( target ) )
+		throw std::runtime_error( "Can not to put data to the buffer without bound target. Try to bind a buffer and try again" );
+
+	glBufferData( static_cast< GLenum >( target ), size, data, static_cast< GLenum >( drawType ) );
+}
+
+void Gl::Vbo::BoundBuffer::setBuffer( Target target, GLuint buffer ) noexcept
+{
 	switch ( target )
 	{
 	case Gl::Vbo::Target::Array:
@@ -115,5 +127,40 @@ void Gl::Vbo::bindBuffer( Target target, GLuint buffer ) noexcept
 	case Gl::Vbo::Target::Uniform:
 		bound_.uniformBuffer = buffer;
 		break;
+	}
+}
+
+bool Gl::Vbo::BoundBuffer::isSetBuffer( Target target ) noexcept
+{
+	switch ( target )
+	{
+	case Gl::Vbo::Target::Array:
+		return static_cast< bool >( bound_.arrayBuffer );
+	case Gl::Vbo::Target::AtomicCounter:
+		return static_cast< bool >( bound_.atomicCounterBuffer );
+	case Gl::Vbo::Target::CopyRead:
+		return static_cast< bool >( bound_.copyReadBuffer );
+	case Gl::Vbo::Target::CopyWrite:
+		return static_cast< bool >( bound_.copyWriteBuffer );
+	case Gl::Vbo::Target::DispatchIndirect:
+		return static_cast< bool >( bound_.dispatchIndirectBuffer );
+	case Gl::Vbo::Target::DrawIndirect:
+		return static_cast< bool >( bound_.drawIndirectBuffer );
+	case Gl::Vbo::Target::ElementArray:
+		return static_cast< bool >( bound_.elementArrayBuffer );
+	case Gl::Vbo::Target::PixelPack:
+		return static_cast< bool >( bound_.pixelPackBuffer );
+	case Gl::Vbo::Target::PixelUnpack:
+		return static_cast< bool >( bound_.pixelUnpackBuffer );
+	case Gl::Vbo::Target::Query:
+		return static_cast< bool >( bound_.queryBuffer );
+	case Gl::Vbo::Target::ShaderStorage:
+		return static_cast< bool >( bound_.shaderStorageBuffer );
+	case Gl::Vbo::Target::Texture:
+		return static_cast< bool >( bound_.textureBuffer );
+	case Gl::Vbo::Target::TransformFeedback:
+		return static_cast< bool >( bound_.transformFeedbackBuffer );
+	case Gl::Vbo::Target::Uniform:
+		return static_cast< bool >( bound_.uniformBuffer );
 	}
 }

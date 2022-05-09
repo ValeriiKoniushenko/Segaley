@@ -25,7 +25,7 @@ int main()
 
 	auto vbo = Gl::Vbo::genBuffer();
 	Gl::Vbo::bindBuffer( Gl::Vbo::Target::Array, vbo );
-	glBufferData( GL_ARRAY_BUFFER, sizeof( verticies ), verticies, GL_STATIC_DRAW );
+	Gl::Vbo::bufferData( Gl::Vbo::Target::Array, sizeof( verticies ), verticies, Gl::Vbo::DrawType::StaticDraw );
 
 	auto& wnd = Window::instance();
 	while ( wnd.isOpen() )

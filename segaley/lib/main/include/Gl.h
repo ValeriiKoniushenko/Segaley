@@ -55,9 +55,23 @@ public:
 			Uniform = GL_UNIFORM_BUFFER
 		};
 
+		enum class DrawType
+		{
+			StreamDraw = GL_STREAM_DRAW,
+			StreamRead = GL_STREAM_READ,
+			StreamCopy = GL_STREAM_COPY,
+			StaticDraw = GL_STATIC_DRAW,
+			StaticRead = GL_STATIC_READ,
+			StaticCopy = GL_STATIC_COPY,
+			DynamicDraw = GL_DYNAMIC_DRAW,
+			DynamicRead = GL_DYNAMIC_READ,
+			DynamicCopy = GL_DYNAMIC_COPY
+		};
+
 	public:
 		static GLuint genBuffer() noexcept;
 		static void bindBuffer( Target target, GLuint buffer ) noexcept;
+		static void bufferData( Target target, GLsizeiptr size, const void* data, DrawType drawType );
 
 	private:
 		static struct BoundBuffer final
@@ -76,6 +90,9 @@ public:
 			GLuint textureBuffer = 0;
 			GLuint transformFeedbackBuffer = 0;
 			GLuint uniformBuffer = 0;
+
+			void setBuffer( Target target, GLuint buffer ) noexcept;
+			bool isSetBuffer( Target target ) noexcept;
 		} bound_;
 	};
 };
