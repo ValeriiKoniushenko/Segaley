@@ -3,6 +3,7 @@
 #include <stdexcept>
 
 Gl::Vbo::BoundBuffer Gl::Vbo::bound_;
+GLuint Gl::Vao::boundVao_ = 0;
 
 void Gl::gladInitialization()
 {
@@ -108,14 +109,14 @@ void Gl::linkProgram( GLuint program )
 		throw std::runtime_error( "Can not compile shader program: " + getProgramInfoLog( program ) );
 }
 
-GLuint Gl::Vbo::genBuffer() noexcept
+GLuint Gl::Vbo::generate() noexcept
 {
 	GLuint vbo = 0;
 	glGenBuffers( 1, &vbo );
 	return vbo;
 }
 
-void Gl::Vbo::bindBuffer( Target target, GLuint buffer ) noexcept
+void Gl::Vbo::bind( Target target, GLuint buffer ) noexcept
 {
 	glBindBuffer( static_cast< GLenum >( target ), buffer );
 	bound_.setBuffer( target, buffer );
@@ -212,3 +213,27 @@ bool Gl::Vbo::BoundBuffer::isSetBuffer( Target target ) noexcept
 		return static_cast< bool >( bound_.uniformBuffer );
 	}
 }
+
+GLuint Gl::Vao::generate() noexcept
+{
+	GLuint vao = 0;
+	glGenVertexArrays( 1, &vao );
+	return vao;
+}
+
+void Gl::Vao::bind( GLuint vao ) noexcept
+{
+	glBindVertexArray( vao );
+	boundVao_ = vao;
+}
+
+bool Gl::Vao::isBind() noexcept
+{
+	return boundVao_ != 0;
+}
+
+void Gl::Vao::reset() noexcept
+{
+	bind( 0 );
+}
+

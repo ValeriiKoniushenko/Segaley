@@ -83,8 +83,8 @@ public:
 		};
 
 	public:
-		static GLuint genBuffer() noexcept;
-		static void bindBuffer( Target target, GLuint buffer ) noexcept;
+		static GLuint generate() noexcept;
+		static void bind( Target target, GLuint buffer ) noexcept;
 		static void bufferData( Target target, GLsizeiptr size, const void* data, DrawType drawType );
 
 	private:
@@ -108,5 +108,16 @@ public:
 			void setBuffer( Target target, GLuint buffer ) noexcept;
 			bool isSetBuffer( Target target ) noexcept;
 		} bound_;
+	};
+
+	class Vao final
+	{
+	public:
+		static GLuint generate() noexcept;
+		static void bind( GLuint vao ) noexcept;
+		static bool isBind() noexcept;
+		static void reset() noexcept;
+	private:
+		static GLuint boundVao_;
 	};
 };

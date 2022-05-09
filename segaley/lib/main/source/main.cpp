@@ -36,9 +36,15 @@ int main()
 		 0.0f,  0.5f, 0.0f
 	};
 
-	auto vbo = Gl::Vbo::genBuffer();
-	Gl::Vbo::bindBuffer( Gl::Vbo::Target::Array, vbo );
+	auto vbo = Gl::Vbo::generate();
+	Gl::Vbo::bind( Gl::Vbo::Target::Array, vbo );
 	Gl::Vbo::bufferData( Gl::Vbo::Target::Array, sizeof( verticies ), verticies, Gl::Vbo::DrawType::StaticDraw );
+
+	GLuint vao = Gl::Vao::generate();
+	Gl::Vao::bind( vao );
+
+	glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof( float ), ( void* )0 );
+	glEnableVertexAttribArray( 0 );
 
 	auto& wnd = Window::instance();
 	while ( wnd.isOpen() )
@@ -46,7 +52,7 @@ int main()
 		wnd.pollEvents();
 		wnd.clearScreen( Window::Buffer::Color, RGBAf( 0.2f, 0.3f, 0.3f, 1.f ) );
 		
-		
+		glDrawArrays( GL_TRIANGLES, 0, 3 );
 
 		wnd.swapBuffers();
 	}
