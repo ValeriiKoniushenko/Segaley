@@ -38,12 +38,14 @@ public:
 	static void compileShader( GLuint shader );
 	static GLint getShaderiv( GLuint shader, Parameter parameter ) noexcept;
 	static std::string getShaderInfoLog( GLuint shader ) noexcept;
+	static void deleteShader( GLuint shader ) noexcept;
 
 	static GLint getProgramiv( GLuint program, Parameter parameter ) noexcept;
 	static std::string getProgramInfoLog( GLuint program ) noexcept;
 	static GLuint createProgram() noexcept;
 	static void attachShader( GLuint program, GLuint shader ) noexcept;
 	static void linkProgram( GLuint program );
+
 
 	class Vbo final
 	{

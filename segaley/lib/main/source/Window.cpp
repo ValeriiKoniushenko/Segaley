@@ -363,4 +363,6 @@ void DebugMessageCallback( GLenum source, GLenum type, GLuint id,
 	std::stringstream ss;
 	ss << "[ " << id << " ] [" << _type << "] [ " << _severity << " ] ";
 	ss << "a problem was raised from " << _source << ": " << msg;
+
+	throw std::runtime_error( ss.str() );
 }

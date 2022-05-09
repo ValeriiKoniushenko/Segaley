@@ -63,6 +63,14 @@ std::string Gl::getShaderInfoLog( GLuint shader ) noexcept
 	return message.get();
 }
 
+void Gl::deleteShader( GLuint shader ) noexcept
+{
+	glDeleteShader( shader );
+
+	if ( getShaderiv( shader, Parameter::DeleteStatus ) == GL_FALSE )
+		throw std::runtime_error( "Can not delete the shader: " + getShaderInfoLog( shader ) );
+}
+
 GLint Gl::getProgramiv( GLuint program, Parameter parameter ) noexcept
 {
 	GLint status = 0;

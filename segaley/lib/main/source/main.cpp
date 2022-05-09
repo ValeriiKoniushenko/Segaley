@@ -27,8 +27,8 @@ int main()
 	Gl::attachShader( shaderProgram, fragmentShader );
 	Gl::linkProgram( shaderProgram );
 
-	glDeleteShader( vertexShader );
-	glDeleteShader( fragmentShader );
+	Gl::deleteShader( vertexShader );
+	Gl::deleteShader( fragmentShader );
 
 	float verticies[] = {
 		-0.5f, -0.5f, 0.0f,
