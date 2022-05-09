@@ -55,9 +55,49 @@ std::string Gl::getShaderInfoLog( GLuint shader ) noexcept
 {
 	GLsizei logLength = 0;
 	GLsizei bufferLength = getShaderiv( shader, Parameter::InfoLogLength );
+	if ( bufferLength == 0u )
+		return {};
+
 	std::unique_ptr< GLchar[] > message( new GLchar[ bufferLength ] );
 	glGetShaderInfoLog( shader, bufferLength, &logLength, message.get() );
 	return message.get();
+}
+
+GLint Gl::getProgramiv( GLuint program, Parameter parameter ) noexcept
+{
+	GLint status = 0;
+	glGetProgramiv( program, static_cast< GLenum >( parameter ), &status );
+	return status;
+}
+
+std::string Gl::getProgramInfoLog( GLuint program ) noexcept
+{
+	GLsizei logLength = 0;
+	GLsizei bufferLength = getProgramiv( program, Parameter::InfoLogLength );
+	if ( bufferLength == 0u )
+		return {};
+
+	std::unique_ptr< GLchar[] > message( new GLchar[ bufferLength ] );
+	glGetProgramInfoLog( program, bufferLength, &logLength, message.get() );
+	return message.get();
+}
+
+GLuint Gl::createProgram() noexcept
+{
+	return glCreateProgram();
+}
+
+void Gl::attachShader( GLuint program, GLuint shader ) noexcept
+{
+	glAttachShader( program, shader );
+}
+
+void Gl::linkProgram( GLuint program )
+{
+	glLinkProgram( program );
+
+	if ( getProgramiv( program, Parameter::LinkStatus ) == GL_FALSE )
+		throw std::runtime_error( "Can not compile shader program: " + getProgramInfoLog( program ) );
 }
 
 GLuint Gl::Vbo::genBuffer() noexcept

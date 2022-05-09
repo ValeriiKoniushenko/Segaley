@@ -21,7 +21,13 @@ public:
 		DeleteStatus = GL_DELETE_STATUS,
 		CompileStatus = GL_COMPILE_STATUS,
 		InfoLogLength = GL_INFO_LOG_LENGTH,
-		ShaderSourceLength = GL_SHADER_SOURCE_LENGTH
+		ShaderSourceLength = GL_SHADER_SOURCE_LENGTH,
+		LinkStatus = GL_LINK_STATUS,
+		ValidateStatus = GL_VALIDATE_STATUS,
+		AttachedShaders = GL_ATTACHED_SHADERS,
+		ActiveAttributes = GL_ACTIVE_ATTRIBUTES,
+		ActiveAttribute_max_length = GL_ACTIVE_ATTRIBUTE_MAX_LENGTH,
+		ActiveUniforms = GL_ACTIVE_UNIFORMS
 	};
 
 	static void gladInitialization();
@@ -32,6 +38,12 @@ public:
 	static void compileShader( GLuint shader );
 	static GLint getShaderiv( GLuint shader, Parameter parameter ) noexcept;
 	static std::string getShaderInfoLog( GLuint shader ) noexcept;
+
+	static GLint getProgramiv( GLuint program, Parameter parameter ) noexcept;
+	static std::string getProgramInfoLog( GLuint program ) noexcept;
+	static GLuint createProgram() noexcept;
+	static void attachShader( GLuint program, GLuint shader ) noexcept;
+	static void linkProgram( GLuint program );
 
 	class Vbo final
 	{

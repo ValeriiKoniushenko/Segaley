@@ -12,10 +12,23 @@ int main()
 
 	Window::instance();
 
-	GLuint vertexShader = Gl::createShader( Gl::Shader::Vertex );
+	auto vertexShader = Gl::createShader( Gl::Shader::Vertex );
 	auto vertexShaderSource = utils::getFileContent( "shaders/main.vert" );
 	Gl::shaderSource( vertexShader, 1, vertexShaderSource );
 	Gl::compileShader( vertexShader );
+
+	auto fragmentShader = Gl::createShader( Gl::Shader::Fragment );
+	auto fragmentShaderSource = utils::getFileContent( "shaders/main.frag" );
+	Gl::shaderSource( fragmentShader, 1, fragmentShaderSource );
+	Gl::compileShader( fragmentShader );
+
+	auto shaderProgram = Gl::createProgram();
+	Gl::attachShader( shaderProgram, vertexShader );
+	Gl::attachShader( shaderProgram, fragmentShader );
+	Gl::linkProgram( shaderProgram );
+
+	glDeleteShader( vertexShader );
+	glDeleteShader( fragmentShader );
 
 	float verticies[] = {
 		-0.5f, -0.5f, 0.0f,
