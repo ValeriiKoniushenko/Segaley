@@ -82,6 +82,13 @@ public:
 		GLuint id = 0;
 	};
 
+	struct Uniform
+	{
+		DataType type = DataType::None;
+		std::string name;
+		GLuint id = 0;
+	};
+
 	static void gladInitialization();
 	static GLFWwindow* createWindow( unsigned short width, unsigned short height, const std::string& title );
 
@@ -102,6 +109,7 @@ public:
 	static void deleteProgram( GLuint program ) noexcept;
 	static std::vector< GLuint > getAttachedShaders( GLuint program ) noexcept;
 	static std::vector< Attribute > getAtrributes( GLuint program ) noexcept;
+	static std::vector< Uniform > getUniforms( GLuint program ) noexcept;
 
 	static void vertexAttribPointer( GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void* pointer );
 	static void enableVertexAttribArray	( GLuint index ) noexcept;

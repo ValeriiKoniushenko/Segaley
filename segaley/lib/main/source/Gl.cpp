@@ -154,7 +154,23 @@ std::vector< Gl::Attribute > Gl::getAtrributes( GLuint program ) noexcept
 		attributes[ i ].type = static_cast< DataType >( type );
 	}
 
-	return std::move( attributes );
+	return attributes;
+}
+
+std::vector< Gl::Uniform > Gl::getUniforms( GLuint program ) noexcept
+{
+	std::vector< Gl::Uniform > uniforms;
+	uniforms.resize( getProgramiv( program, Parameter::ActiveUniforms ) );
+	for ( GLuint i = 0; i < uniforms.size(); ++i )
+	{
+		char name[ 128 ];
+		GLenum type;
+		glGetActiveUniform( program, i, 128, nullptr, nullptr, &type, name );
+		uniforms[ i ].name = name;
+		uniforms[ i ].type = static_cast< DataType >( type );
+	}
+
+	return uniforms;
 }
 
 void Gl::vertexAttribPointer( GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void* pointer )
