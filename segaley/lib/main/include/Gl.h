@@ -3,6 +3,7 @@
 #include "Glfw.h"
 
 #include <string>
+#include <vector>
 
 class Gl final
 {
@@ -50,16 +51,20 @@ public:
 	static void compileShader( GLuint shader );
 	static GLint getShaderiv( GLuint shader, Parameter parameter ) noexcept;
 	static std::string getShaderInfoLog( GLuint shader ) noexcept;
-	static void deleteShader( GLuint shader ) noexcept;
+	static void deleteShader( GLuint shader );
+	static void detachShader( GLuint program, GLuint shader ) noexcept;
+	static bool isAttachedShader( GLuint program, GLuint shader ) noexcept;
 
 	static GLint getProgramiv( GLuint program, Parameter parameter ) noexcept;
 	static std::string getProgramInfoLog( GLuint program ) noexcept;
 	static GLuint createProgram() noexcept;
 	static void attachShader( GLuint program, GLuint shader ) noexcept;
 	static void linkProgram( GLuint program );
+	static void deleteProgram( GLuint program ) noexcept;
+	static std::vector< GLuint > getAttachedShaders( GLuint program ) noexcept;
 
 	static void vertexAttribPointer( GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void* pointer );
-	static void enableVertexAttribArray( GLuint index ) noexcept;
+	static void enableVertexAttribArray	( GLuint index ) noexcept;
 
 	static void drawArrays( DrawMode mode, GLint first, GLsizei count );
 
@@ -102,6 +107,7 @@ public:
 		static GLuint generate() noexcept;
 		static void bind( Target target, GLuint buffer ) noexcept;
 		static void bufferData( Target target, GLsizeiptr size, const void* data, DrawType drawType );
+		static void deleteBuffer( GLuint buffer ) noexcept;
 
 	private:
 		static struct BoundBuffer final
@@ -133,6 +139,8 @@ public:
 		static void bind( GLuint vao ) noexcept;
 		static bool isBind() noexcept;
 		static void reset() noexcept;
+		static void deleteBuffer( GLuint buffer ) noexcept;
+
 	private:
 		static GLuint boundVao_;
 	};

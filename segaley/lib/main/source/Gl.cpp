@@ -64,12 +64,23 @@ std::string Gl::getShaderInfoLog( GLuint shader ) noexcept
 	return message.get();
 }
 
-void Gl::deleteShader( GLuint shader ) noexcept
+void Gl::deleteShader( GLuint shader )
 {
 	glDeleteShader( shader );
 
 	if ( getShaderiv( shader, Parameter::DeleteStatus ) == GL_FALSE )
 		throw std::runtime_error( "Can not delete the shader: " + getShaderInfoLog( shader ) );
+}
+
+void Gl::detachShader( GLuint program, GLuint shader ) noexcept
+{
+	glDetachShader( program, shader );
+}
+
+bool Gl::isAttachedShader( GLuint program, GLuint shader ) noexcept
+{
+	auto shaders = getAttachedShaders( program );
+	return std::find( shaders.begin(), shaders.end(), shader ) != shaders.end();
 }
 
 GLint Gl::getProgramiv( GLuint program, Parameter parameter ) noexcept
@@ -107,6 +118,24 @@ void Gl::linkProgram( GLuint program )
 
 	if ( getProgramiv( program, Parameter::LinkStatus ) == GL_FALSE )
 		throw std::runtime_error( "Can not compile shader program: " + getProgramInfoLog( program ) );
+}
+
+void Gl::deleteProgram( GLuint program ) noexcept
+{
+	glDeleteProgram( program );
+}
+
+std::vector< GLuint > Gl::getAttachedShaders( GLuint program ) noexcept
+{
+	std::vector< GLuint > shaders;
+	shaders.resize( getProgramiv( program, Parameter::AttachedShaders ) );
+	
+	if ( shaders.empty() )
+		return {};
+
+	glGetAttachedShaders( program, shaders.size(), nullptr, shaders.data() );
+	
+	return shaders;
 }
 
 void Gl::vertexAttribPointer( GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void* pointer )
@@ -149,6 +178,11 @@ void Gl::Vbo::bufferData( Target target, GLsizeiptr size, const void* data, Draw
 		throw std::runtime_error( "Can not to put data to the buffer without bound target. Try to bind a buffer and try again" );
 
 	glBufferData( static_cast< GLenum >( target ), size, data, static_cast< GLenum >( drawType ) );
+}
+
+void Gl::Vbo::deleteBuffer( GLuint buffer ) noexcept
+{
+	glDeleteBuffers( 1, &buffer );
 }
 
 void Gl::Vbo::BoundBuffer::setBuffer( Target target, GLuint buffer ) noexcept
@@ -258,3 +292,7 @@ void Gl::Vao::reset() noexcept
 	bind( 0 );
 }
 
+void Gl::Vao::deleteBuffer( GLuint buffer ) noexcept
+{
+	glDeleteVertexArrays( 1, &buffer );
+}

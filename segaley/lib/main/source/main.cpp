@@ -23,12 +23,15 @@ int main()
 	Gl::compileShader( fragmentShader );
 
 	auto shaderProgram = Gl::createProgram();
+
 	Gl::attachShader( shaderProgram, vertexShader );
 	Gl::attachShader( shaderProgram, fragmentShader );
 	Gl::linkProgram( shaderProgram );
-
+	
 	Gl::deleteShader( vertexShader );
 	Gl::deleteShader( fragmentShader );
+	Gl::detachShader( shaderProgram, vertexShader );
+	Gl::detachShader( shaderProgram, fragmentShader);
 
 	float verticies[] = {
 		-0.5f, -0.5f, 0.0f,
@@ -46,6 +49,7 @@ int main()
 	Gl::vertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof( float ), ( void* )0 );
 	Gl::enableVertexAttribArray( 0 );
 
+
 	auto& wnd = Window::instance();
 	while ( wnd.isOpen() )
 	{
@@ -56,6 +60,10 @@ int main()
 
 		wnd.swapBuffers();
 	}
+
+	Gl::deleteProgram( shaderProgram );
+	Gl::Vbo::deleteBuffer( vbo );
+	Gl::Vao::deleteBuffer( vao );
 
 	return 0;
 }
