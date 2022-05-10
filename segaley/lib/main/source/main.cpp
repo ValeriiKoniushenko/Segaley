@@ -28,8 +28,8 @@ int main()
 	Gl::attachShader( shaderProgram, fragmentShader );
 	Gl::linkProgram( shaderProgram );
 	
-	Gl::deleteShader( vertexShader );
-	Gl::deleteShader( fragmentShader );
+	Gl::deleteShader( shaderProgram, vertexShader );
+	Gl::deleteShader( shaderProgram, fragmentShader );
 	Gl::detachShader( shaderProgram, vertexShader );
 	Gl::detachShader( shaderProgram, fragmentShader);
 

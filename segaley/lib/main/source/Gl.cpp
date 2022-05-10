@@ -64,8 +64,11 @@ std::string Gl::getShaderInfoLog( GLuint shader ) noexcept
 	return message.get();
 }
 
-void Gl::deleteShader( GLuint shader )
+void Gl::deleteShader( GLuint program, GLuint shader )
 {
+	if ( !isAttachedShader( program, shader ) )
+		throw std::runtime_error( "The shader cannot be deleted as it was detached." );
+
 	glDeleteShader( shader );
 
 	if ( getShaderiv( shader, Parameter::DeleteStatus ) == GL_FALSE )

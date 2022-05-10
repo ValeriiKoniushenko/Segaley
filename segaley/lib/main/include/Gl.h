@@ -51,7 +51,7 @@ public:
 	static void compileShader( GLuint shader );
 	static GLint getShaderiv( GLuint shader, Parameter parameter ) noexcept;
 	static std::string getShaderInfoLog( GLuint shader ) noexcept;
-	static void deleteShader( GLuint shader );
+	static void deleteShader( GLuint program, GLuint shader );
 	static void detachShader( GLuint program, GLuint shader ) noexcept;
 	static bool isAttachedShader( GLuint program, GLuint shader ) noexcept;
 
