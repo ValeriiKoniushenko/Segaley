@@ -12,13 +12,15 @@ int main()
 
 	Window::instance();
 
+	using namespace std::string_literals;
+
 	auto vertexShader = Gl::createShader( Gl::Shader::Vertex );
-	auto vertexShaderSource = utils::getFileContent( "shaders/main.vert" );
+	auto vertexShaderSource = utils::getFileContent( ASSETS_DIR_NAME + "/shaders/main.vert"s );
 	Gl::shaderSource( vertexShader, 1, vertexShaderSource );
 	Gl::compileShader( vertexShader );
 
 	auto fragmentShader = Gl::createShader( Gl::Shader::Fragment );
-	auto fragmentShaderSource = utils::getFileContent( "shaders/main.frag" );
+	auto fragmentShaderSource = utils::getFileContent( ASSETS_DIR_NAME + "/shaders/main.frag"s );
 	Gl::shaderSource( fragmentShader, 1, fragmentShaderSource );
 	Gl::compileShader( fragmentShader );
 
