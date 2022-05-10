@@ -10,6 +10,38 @@ class Gl final
 public:
 	Gl() = delete;
 
+
+	enum class DataType
+	{
+		None,
+		Byte = GL_BYTE,
+		UnsignedByte = GL_UNSIGNED_BYTE,
+		Short = GL_SHORT,
+		UnsignedShort = GL_UNSIGNED_SHORT,
+		Int = GL_INT,
+		UnsignedInt = GL_UNSIGNED_INT,
+		Float = GL_FLOAT,
+		FloatVec2 = GL_FLOAT_VEC2,
+		FloatVec3 = GL_FLOAT_VEC3,
+		FloatVec4 = GL_FLOAT_VEC4,
+		IntVec2 = GL_INT_VEC2,
+		IntVec3 = GL_INT_VEC3,
+		IntVec4 = GL_INT_VEC4,
+		Bool = GL_BOOL,
+		BoolVec2 = GL_BOOL_VEC2,
+		BoolVec3 = GL_BOOL_VEC3,
+		BoolVec4 = GL_BOOL_VEC4,
+		FloatMat2 = GL_FLOAT_MAT2,
+		FloatMat3 = GL_FLOAT_MAT3,
+		FloatMat4 = GL_FLOAT_MAT4,
+		Sampler1d = GL_SAMPLER_1D,
+		Sampler2d = GL_SAMPLER_2D,
+		Sampler3d = GL_SAMPLER_3D,
+		SamplerCube = GL_SAMPLER_CUBE,
+		Sampler1d_shadow = GL_SAMPLER_1D_SHADOW,
+		Sampler2d_shadow = GL_SAMPLER_2D_SHADOW
+	};
+
 	enum class Shader
 	{
 		Fragment = GL_FRAGMENT_SHADER,
@@ -43,6 +75,13 @@ public:
 		Quads = GL_QUADS
 	};
 
+	struct Attribute
+	{
+		DataType type = DataType::None;
+		std::string name;
+		GLuint id = 0;
+	};
+
 	static void gladInitialization();
 	static GLFWwindow* createWindow( unsigned short width, unsigned short height, const std::string& title );
 
@@ -62,6 +101,7 @@ public:
 	static void linkProgram( GLuint program );
 	static void deleteProgram( GLuint program ) noexcept;
 	static std::vector< GLuint > getAttachedShaders( GLuint program ) noexcept;
+	static std::vector< Attribute > getAtrributes( GLuint program ) noexcept;
 
 	static void vertexAttribPointer( GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void* pointer );
 	static void enableVertexAttribArray	( GLuint index ) noexcept;

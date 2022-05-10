@@ -141,6 +141,22 @@ std::vector< GLuint > Gl::getAttachedShaders( GLuint program ) noexcept
 	return shaders;
 }
 
+std::vector< Gl::Attribute > Gl::getAtrributes( GLuint program ) noexcept
+{
+	std::vector< Gl::Attribute > attributes;
+	attributes.resize( getProgramiv( program, Parameter::ActiveAttributes ) );
+	for ( GLuint i = 0; i < attributes.size(); ++i )
+	{
+		char name[ 128 ];
+		GLenum type;
+		glGetActiveAttrib( program, i, 128, nullptr, nullptr, &type, name );
+		attributes[ i ].name = name;
+		attributes[ i ].type = static_cast< DataType >( type );
+	}
+
+	return std::move( attributes );
+}
+
 void Gl::vertexAttribPointer( GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void* pointer )
 {
 	if ( !Vao::isBind() )
