@@ -39,27 +39,30 @@ void launch()
 
 	Gl::useProgram( shaderProgram );
 
-	std::vector< float > verticies = {
+	Vbo vbo( Gl::Vbo::Target::Array, true );
+	Vao vao( true );
+	
+	vbo.bufferData( std::vector< float >{
 		-0.5f, -0.5f, 0.0f,	  0.0f, 0.0f,
 		 0.5f, -0.5f, 0.0f,	  1.0f, 0.0f,
 		 0.0f,  0.5f, 0.0f,   0.5f, 1.0f
-	};
-
+	}, Gl::Vbo::DrawType::StaticDraw );
 
 	Texture2D texture( true );
-	Image image( ASSETS_DIR_NAME + "/images/brickwall.jpg"s );
-	
-	texture.setImage( image );
+	texture.loadFromFile( ASSETS_DIR_NAME + "/images/brickwall.jpg"s );
 	texture.setWrapS( Gl::Texture::Wrap::Repeat );
 	texture.setWrapT( Gl::Texture::Wrap::Repeat );
 	texture.setMinFilter( Gl::Texture::MinFilter::Nearest );
 	texture.setMagFilter( Gl::Texture::MagFilter::Nearest );
 	texture.generateMipmap();
 
-	Vbo vbo( Gl::Vbo::Target::Array, true );
-	vbo.bufferData( verticies, Gl::Vbo::DrawType::StaticDraw );
-
-	Vao vao( true );
+	Texture2D texture2( true );
+	texture2.loadFromFile( ASSETS_DIR_NAME + "/images/gravel.jpg"s );
+	texture2.setWrapS( Gl::Texture::Wrap::Repeat );
+	texture2.setWrapT( Gl::Texture::Wrap::Repeat );
+	texture2.setMinFilter( Gl::Texture::MinFilter::Nearest );
+	texture2.setMagFilter( Gl::Texture::MagFilter::Nearest );
+	texture2.generateMipmap();	
 
 	Gl::vertexAttribPointer( 0, 3, Gl::DataType::Float, false, 5 * sizeof( float ), ( void* )0 );
 	Gl::vertexAttribPointer( 1, 2, Gl::DataType::Float, false, 5 * sizeof( float ), ( void* )( sizeof( float ) * 3 ) );

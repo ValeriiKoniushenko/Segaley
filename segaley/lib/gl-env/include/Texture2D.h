@@ -3,6 +3,8 @@
 #include "Image.h"
 #include "Gl.h"
 
+#include <filesystem>
+
 class Texture2D final
 {
 public:
@@ -26,6 +28,8 @@ public:
 	void setWrapR( Gl::Texture::Wrap wrap );
 	void setImage( const Image& image );
 	void generateMipmap();
+	void loadFromFile( std::filesystem::path path );
+
 private:
 	GLuint id_ = 0;
 	static const Gl::Texture::Target target_;

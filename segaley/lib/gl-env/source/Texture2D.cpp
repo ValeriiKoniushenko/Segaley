@@ -84,3 +84,10 @@ void Texture2D::generateMipmap()
 {
 	Gl::Texture::generateMipmap( target_ );
 }
+
+void Texture2D::loadFromFile( std::filesystem::path path )
+{
+	Image image;
+	image.loadImage( path );
+	setImage( image );
+}
