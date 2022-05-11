@@ -1,7 +1,5 @@
 #include "Repeater.h"
 
-#include "Thrower.h"
-
 Repeater::Repeater() :
 	freq_( 0. )
 {
@@ -17,7 +15,7 @@ Repeater::Repeater( callbackT callback, double freq ) noexcept( false ) :
 void Repeater::setFreq( double freq ) noexcept( false )
 {
 	if ( freq <= 0. )
-		MAKE_THROW( "Repeater's frequency can't be less\\equal then\\of 0" );
+		throw std::runtime_error( "Repeater's frequency can't be less\\equal then\\of 0" );
 
 	freq_ = freq;
 }

@@ -20,8 +20,11 @@ GLFWwindow* Gl::createWindow( unsigned short width, unsigned short height, const
 	if ( !Glfw::isInit() )
 		throw std::runtime_error( "Impossible to create new window without a GLFW initialization" );
 
-	if ( !glfwCreateWindow( width, height, title.c_str(), nullptr, nullptr ) )
+	auto* window = glfwCreateWindow( width, height, title.c_str(), nullptr, nullptr );
+	if ( !window )
 		throw std::runtime_error( "Failed to create new window" );
+
+	return window;
 }
 
 GLuint Gl::createShader( Shader type ) noexcept
@@ -132,12 +135,12 @@ void Gl::deleteProgram( GLuint program ) noexcept
 std::vector< GLuint > Gl::getAttachedShaders( GLuint program ) noexcept
 {
 	std::vector< GLuint > shaders;
-	shaders.resize( getProgramiv( program, Parameter::AttachedShaders ) );
+	shaders.resize( static_cast< std::size_t >( getProgramiv( program, Parameter::AttachedShaders ) ) );
 	
 	if ( shaders.empty() )
 		return {};
 
-	glGetAttachedShaders( program, shaders.size(), nullptr, shaders.data() );
+	glGetAttachedShaders( program, static_cast< GLsizei >( shaders.size() ), nullptr, shaders.data() );
 	
 	return shaders;
 }
@@ -249,7 +252,7 @@ void Gl::Vbo::deleteBuffer( GLuint buffer ) noexcept
 	glDeleteBuffers( 1, &buffer );
 }
 
-void Gl::Vbo::BoundBuffer::setBuffer( Target target, GLuint buffer ) noexcept
+void Gl::Vbo::BoundBuffer::setBuffer( Target target, GLuint buffer )
 {
 	switch ( target )
 	{
@@ -295,10 +298,12 @@ void Gl::Vbo::BoundBuffer::setBuffer( Target target, GLuint buffer ) noexcept
 	case Gl::Vbo::Target::Uniform:
 		bound_.uniformBuffer = buffer;
 		break;
+	default:
+		throw std::runtime_error( "Invalid argument. Not implemented." );
 	}
 }
 
-bool Gl::Vbo::BoundBuffer::isSetBuffer( Target target ) noexcept
+bool Gl::Vbo::BoundBuffer::isSetBuffer( Target target )
 {
 	switch ( target )
 	{
@@ -330,7 +335,11 @@ bool Gl::Vbo::BoundBuffer::isSetBuffer( Target target ) noexcept
 		return static_cast< bool >( bound_.transformFeedbackBuffer );
 	case Gl::Vbo::Target::Uniform:
 		return static_cast< bool >( bound_.uniformBuffer );
+	default:
+		throw std::runtime_error( "Invalid argument. Not implemented." );
 	}
+	
+	return false;
 }
 
 GLuint Gl::Vao::generate() noexcept
@@ -389,7 +398,7 @@ void Gl::Texture::deleteBuffer( GLuint texture ) noexcept
 	glDeleteTextures( 1, &texture );
 }
 
-void Gl::Texture::BoundTexture::setBuffer( Target target, GLuint buffer ) noexcept
+void Gl::Texture::BoundTexture::setBuffer( Target target, GLuint buffer )
 {
 	switch ( target )
 	{
@@ -426,47 +435,42 @@ void Gl::Texture::BoundTexture::setBuffer( Target target, GLuint buffer ) noexce
 	case Gl::Texture::Target::Texture2dMultisampleArray:
 		texture2dMultisampleArray = buffer;
 		break;
+	default:
+		throw std::runtime_error( "Invalid argument. Not implemented." );
 	}
 }
 
-bool Gl::Texture::BoundTexture::isSetBuffer( Target target ) noexcept
+bool Gl::Texture::BoundTexture::isSetBuffer( Target target )
 {
 	switch ( target )
 	{
 	case Gl::Texture::Target::Texture1d:
 		return static_cast< bool >( texture1d );
-		
 	case Gl::Texture::Target::Texture2d:
 		return static_cast< bool >( texture2d );
-		
 	case Gl::Texture::Target::Texture3d:
 		return static_cast< bool >( texture3d );
-		
 	case Gl::Texture::Target::Texture1dArray:
 		return static_cast< bool >( texture1dArray );
-		
 	case Gl::Texture::Target::Texture2dArray:
 		return static_cast< bool >( texture2dArray );
-		
 	case Gl::Texture::Target::TextureRectangle:
 		return static_cast< bool >( textureRectangle );
-		
 	case Gl::Texture::Target::TextureCubeMap:
 		return static_cast< bool >( textureCubeMap );
-		
 	case Gl::Texture::Target::TextureCubeMapArray:
 		return static_cast< bool >( textureCubeMapArray );
-		
 	case Gl::Texture::Target::TextureBuffer:
 		return static_cast< bool >( textureBuffer );
-		
 	case Gl::Texture::Target::Texture2dMultisample:
 		return static_cast< bool >( texture2dMultisample );
-		
 	case Gl::Texture::Target::Texture2dMultisampleArray:
 		return static_cast< bool >( texture2dMultisampleArray );
-		
+	default:
+		throw std::runtime_error( "Invalid argument. Not implemented." );
 	}
+
+	return false;
 }
 
 Gl::Texture::MagFilter Gl::Texture::stringToMagFilter( const std::string& filter )

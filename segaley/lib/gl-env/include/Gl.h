@@ -187,8 +187,8 @@ public:
 			GLuint transformFeedbackBuffer = 0;
 			GLuint uniformBuffer = 0;
 
-			void setBuffer( Target target, GLuint buffer ) noexcept;
-			bool isSetBuffer( Target target ) noexcept;
+			void setBuffer( Target target, GLuint buffer );
+			bool isSetBuffer( Target target );
 		} bound_;
 	};
 
@@ -286,8 +286,8 @@ public:
 			GLuint texture2dMultisample = 0;
 			GLuint texture2dMultisampleArray = 0;
 
-			void setBuffer( Target target, GLuint buffer ) noexcept;
-			bool isSetBuffer( Target target ) noexcept;
+			void setBuffer( Target target, GLuint buffer );
+			bool isSetBuffer( Target target );
 		} boundTexture_;
 	};
 };
