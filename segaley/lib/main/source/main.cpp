@@ -49,8 +49,8 @@ void launch()
 	GLuint vao = Gl::Vao::generate();
 	Gl::Vao::bind( vao );
 
-	Gl::vertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof( float ), ( void* )0 );
-	Gl::vertexAttribPointer( 1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof( float ), ( void* )( sizeof( float ) * 3 ) );
+	Gl::vertexAttribPointer( 0, 3, Gl::DataType::Float, false, 5 * sizeof( float ), ( void* )0 );
+	Gl::vertexAttribPointer( 1, 2, Gl::DataType::Float, false, 5 * sizeof( float ), ( void* )( sizeof( float ) * 3 ) );
 	Gl::enableVertexAttribArray( 0 );
 	Gl::enableVertexAttribArray( 1 );
 

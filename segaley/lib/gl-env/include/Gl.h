@@ -121,7 +121,7 @@ public:
 	static std::vector< Uniform > getUniforms( GLuint program ) noexcept;
 	static void useProgram( GLuint program ) noexcept;
 
-	static void vertexAttribPointer( GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void* pointer );
+	static void vertexAttribPointer( GLuint index, GLint size, DataType type, bool normalized, GLsizei stride, const void* pointer );
 	static void enableVertexAttribArray	( GLuint index ) noexcept;
 
 	static void drawArrays( DrawMode mode, GLint first, GLsizei count );
