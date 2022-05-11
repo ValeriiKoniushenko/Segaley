@@ -18,30 +18,32 @@ public:
 	};
 
 public:
-	Image( std::filesystem::path path = "" )	noexcept( false );
+	Image( std::filesystem::path path = "" );
+	~Image();
 
 	Image( const Image& obj ) = delete;
 	Image( Image&& obj ) noexcept;
 	Image& operator=( const Image& obj ) = delete;
 	Image& operator=( Image&& obj )	noexcept;
 
-	~Image();
+	static Gl::Format toGlFormat( Channel ch );
 
-	static Gl::Format toGlFormat( Channel ch ) noexcept;
-
-	int	getWidth() const noexcept( false );
-	int	getHeight() const noexcept( false );
-	glm::ivec2 getSize() const noexcept( false );
-	Channel	getChannel() const noexcept( false );
-	unsigned char* data() noexcept( false );
-	const unsigned char* data() const noexcept( false );
-	void loadImage( std::filesystem::path path, bool isFlipVertically = true ) noexcept( false );
-	void clear();
-	bool isEmpty() const;
+	int	getWidth() const;
+	int	getHeight() const;
+	glm::ivec2 getSize() const;
+	Channel	getChannel() const;
+	unsigned char* data();
+	const unsigned char* data() const;
+	void loadImage( std::filesystem::path path, bool isFlipVertically = true );
+	void clear() noexcept;
+	bool isEmpty() const noexcept;
 
 private:
-	void init_()noexcept;
-	unsigned char* data_;
-	int width_, height_;
-	Channel channel_;
+	void init_() noexcept;
+
+private:
+	unsigned char* data_ = nullptr;
+	int width_ = 0;
+	int height_ = 0;
+	Channel channel_ = Channel::None;
 };

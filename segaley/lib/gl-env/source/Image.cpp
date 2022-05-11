@@ -5,7 +5,7 @@
 
 #include <stdexcept>
 
-Image::Image( std::filesystem::path path ) noexcept( false )
+Image::Image( std::filesystem::path path )
 {
     init_();
     if( path != "" )
@@ -41,7 +41,7 @@ void Image::init_() noexcept
     channel_ = Channel::None;
 }
 
-Gl::Format Image::toGlFormat( Channel ch ) noexcept
+Gl::Format Image::toGlFormat( Channel ch )
 {
     switch ( ch )
     {
@@ -56,7 +56,7 @@ Gl::Format Image::toGlFormat( Channel ch ) noexcept
     return Gl::Format::Green;
 }
 
-int Image::getWidth() const noexcept( false )
+int Image::getWidth() const
 {
     if( !data_ ) 
         throw std::runtime_error( "Image wasn't loaded. It can't take a width without photo" );
@@ -64,7 +64,7 @@ int Image::getWidth() const noexcept( false )
     return width_;
 }
 
-int Image::getHeight() const noexcept( false )
+int Image::getHeight() const
 {
     if( !data_ ) 
         throw std::runtime_error( "Image wasn't loaded. It can't take a height without photo" );
@@ -72,7 +72,7 @@ int Image::getHeight() const noexcept( false )
     return height_;
 }
 
-glm::ivec2 Image::getSize() const noexcept( false )
+glm::ivec2 Image::getSize() const
 {
     if( !data_ ) 
         throw std::runtime_error( "Image wasn't loaded. It can't take a height without photo" );
@@ -80,7 +80,7 @@ glm::ivec2 Image::getSize() const noexcept( false )
     return glm::ivec2( width_, height_ );
 }
 
-Image::Channel Image::getChannel() const noexcept( false )
+Image::Channel Image::getChannel() const
 {
     if( !data_ ) 
         throw std::runtime_error( "Image wasn't loaded. It can't take a channels without photo" );
@@ -88,7 +88,7 @@ Image::Channel Image::getChannel() const noexcept( false )
     return channel_;
 }
 
-unsigned char* Image::data() noexcept( false )
+unsigned char* Image::data()
 {
     if( !data_ ) 
         throw std::runtime_error( "Image wasn't loaded" );
@@ -96,7 +96,7 @@ unsigned char* Image::data() noexcept( false )
     return data_;
 }
 
-const unsigned char* Image::data() const noexcept( false )
+const unsigned char* Image::data() const
 {
     if( !data_ ) 
         throw std::runtime_error( "Image wasn't loaded" );
@@ -104,7 +104,7 @@ const unsigned char* Image::data() const noexcept( false )
     return data_;
 }
 
-void Image::loadImage( std::filesystem::path path, bool isFlipVertically ) noexcept( false )
+void Image::loadImage( std::filesystem::path path, bool isFlipVertically )
 {
     clear();
     stbi_set_flip_vertically_on_load( isFlipVertically );
@@ -116,7 +116,7 @@ void Image::loadImage( std::filesystem::path path, bool isFlipVertically ) noexc
     channel_ = static_cast< Channel >( channel );
 }
 
-void Image::clear()
+void Image::clear() noexcept
 {
     if( data_ )
     {
@@ -127,7 +127,7 @@ void Image::clear()
     channel_ = Channel::None;
 }
 
-bool Image::isEmpty() const
+bool Image::isEmpty() const noexcept
 {
     return data_ == nullptr;
 }

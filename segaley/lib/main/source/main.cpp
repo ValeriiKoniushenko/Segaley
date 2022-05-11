@@ -47,10 +47,9 @@ void launch()
 
 
 	Texture2D texture( true );
-	{
-		Image image( ASSETS_DIR_NAME + "/images/brickwall.jpg"s );
-		texture.setImage( image );
-	}
+	Image image( ASSETS_DIR_NAME + "/images/brickwall.jpg"s );
+	
+	texture.setImage( image );
 	texture.setWrapS( Gl::Texture::Wrap::Repeat );
 	texture.setWrapT( Gl::Texture::Wrap::Repeat );
 	texture.setMinFilter( Gl::Texture::MinFilter::Nearest );
