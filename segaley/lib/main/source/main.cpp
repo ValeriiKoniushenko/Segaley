@@ -1,6 +1,7 @@
 #include "Window.h"
 #include "DebugActions.h"
 #include "Vbo.h"
+#include "Vao.h"
 #include "Utils.h"
 #include "Image.h"
 
@@ -46,8 +47,7 @@ void launch()
 	Vbo vbo( Gl::Vbo::Target::Array, true );
 	vbo.bufferData( verticies, Gl::Vbo::DrawType::StaticDraw );
 
-	GLuint vao = Gl::Vao::generate();
-	Gl::Vao::bind( vao );
+	Vao vao( true );
 
 	Gl::vertexAttribPointer( 0, 3, Gl::DataType::Float, false, 5 * sizeof( float ), ( void* )0 );
 	Gl::vertexAttribPointer( 1, 2, Gl::DataType::Float, false, 5 * sizeof( float ), ( void* )( sizeof( float ) * 3 ) );
@@ -92,7 +92,6 @@ void launch()
 	}
 
 	Gl::Texture::deleteBuffer( texture );
-	Gl::Vao::deleteBuffer( vao );
 	Gl::deleteProgram( shaderProgram );
 }
 

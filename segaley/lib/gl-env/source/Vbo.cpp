@@ -5,8 +5,11 @@
 Vbo::Vbo( Gl::Vbo::Target target, bool isGenerateAndBind/* = false*/ ) noexcept :
 	target_( target )
 {
-	generate();
-	bind();
+	if ( isGenerateAndBind )
+	{
+		generate();
+		bind();
+	}
 }
 
 Vbo::~Vbo()

@@ -13,4 +13,4 @@ add_library(
 	source/Image.cpp
 	source/Vbo.cpp
 	source/Window.cpp
-)
+ "include/Vao.h" "source/Vao.cpp")
