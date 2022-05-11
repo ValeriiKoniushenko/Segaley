@@ -121,6 +121,3 @@ private:
 void MousePosCallback( GLFWwindow* window, double x, double y );
 void MouseButtonCallback( GLFWwindow* window, int button, int action, int mods );
 void MouseWheelCallback( GLFWwindow* window, double xoffset, double yoffset );
-void DebugMessageCallback( GLenum source, GLenum type, GLuint id,
-									  GLenum severity, GLsizei length,
-									  const GLchar* msg, const void* data );

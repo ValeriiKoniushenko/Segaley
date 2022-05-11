@@ -14,7 +14,13 @@ add_executable(
 	include/Rect.h
 	include/Window.h
 	include/WindowSize.h
- "include/DebugActions.h" "source/DebugActions.cpp" "include/Utils.h" "source/Utils.cpp")
+	include/DebugActions.h
+	source/DebugActions.cpp
+	include/Utils.h
+	source/Utils.cpp
+	include/Image.h
+	source/Image.cpp
+)
 
 target_link_libraries(
 	segaley PRIVATE

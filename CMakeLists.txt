@@ -25,6 +25,7 @@ add_compile_definitions( ASSETS_SRC_PATH="${ASSETS_SRC_PATH}" )
 add_compile_definitions( ASSETS_DIR_NAME="${ASSETS_DIR_NAME}" )
 add_compile_definitions( CONFIGS_DIR_NAME="${CONFIGS_DIR_NAME}" )
 add_compile_definitions( CONFIGS_SRC_PATH="${CONFIGS_SRC_PATH}" )
+add_compile_definitions( DEBUG )
 
 include_directories(
 	${GLAD_PATH}

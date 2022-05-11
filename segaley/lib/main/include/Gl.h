@@ -10,6 +10,15 @@ class Gl final
 public:
 	Gl() = delete;
 
+	enum class Format
+	{
+		Red = GL_RED,
+		Green = GL_GREEN,
+		Blue = GL_BLUE,
+		Alpha = GL_ALPHA,
+		Rgb = GL_RGB,
+		Rgba = GL_RGBA
+	};
 
 	enum class DataType
 	{
@@ -110,11 +119,14 @@ public:
 	static std::vector< GLuint > getAttachedShaders( GLuint program ) noexcept;
 	static std::vector< Attribute > getAtrributes( GLuint program ) noexcept;
 	static std::vector< Uniform > getUniforms( GLuint program ) noexcept;
+	static void useProgram( GLuint program ) noexcept;
 
 	static void vertexAttribPointer( GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void* pointer );
 	static void enableVertexAttribArray	( GLuint index ) noexcept;
 
 	static void drawArrays( DrawMode mode, GLint first, GLsizei count );
+
+	static void requireValidGl();
 
 	class Vbo final
 	{
@@ -191,5 +203,91 @@ public:
 
 	private:
 		static GLuint boundVao_;
+	};
+
+	struct Texture final
+	{
+	public:
+		enum class Target
+		{
+			Texture1d = GL_TEXTURE_1D,
+			Texture2d = GL_TEXTURE_2D,
+			Texture3d = GL_TEXTURE_3D,
+			Texture1dArray = GL_TEXTURE_1D_ARRAY,
+			Texture2dArray = GL_TEXTURE_2D_ARRAY,
+			TextureRectangle = GL_TEXTURE_RECTANGLE,
+			TextureCubeMap = GL_TEXTURE_CUBE_MAP,
+			TextureCubeMapArray = GL_TEXTURE_CUBE_MAP_ARRAY,
+			TextureBuffer = GL_TEXTURE_BUFFER,
+			Texture2dMultisample = GL_TEXTURE_2D_MULTISAMPLE,
+			Texture2dMultisampleArray = GL_TEXTURE_2D_MULTISAMPLE_ARRAY
+		};
+
+		enum class MagFilter
+		{
+			Linear = GL_LINEAR,
+			Nearest = GL_NEAREST,
+		};
+
+		enum class MinFilter
+		{
+			Linear = GL_LINEAR,
+			Nearest = GL_NEAREST,
+			NearestMipmapNearest = GL_NEAREST_MIPMAP_NEAREST,
+			LinearMipmapNearest = GL_LINEAR_MIPMAP_NEAREST,
+			NearestMipmapLinear = GL_NEAREST_MIPMAP_LINEAR,
+			LinearMipmapLinear = GL_LINEAR_MIPMAP_LINEAR
+		};
+
+		enum class Wrap
+		{
+			Clamp2Edge = GL_CLAMP_TO_EDGE,
+			Clamp2Border = GL_CLAMP_TO_BORDER,
+			MirroredRepeat = GL_MIRRORED_REPEAT,
+			Repeat = GL_REPEAT,
+			MirrorClamp2Edge = GL_MIRROR_CLAMP_TO_EDGE
+		};
+
+	public:
+		static GLuint generate() noexcept;
+		static void bind( Target target, GLuint texture ) noexcept;
+		static bool isBind( Target target ) noexcept;
+		static void reset( Target target ) noexcept;
+		static void deleteBuffer( GLuint texture ) noexcept;
+
+		static MagFilter stringToMagFilter( const std::string& filter );
+		static MinFilter stringToMinFilter( const std::string& filter );
+
+		static void setMinFilter( MinFilter filter, Target target );
+		static void setMagFilter( MagFilter filter, Target target );
+		static void setWrapS( Wrap wrap, Target target );
+		static void setWrapT( Wrap wrap, Target target );
+		static void setWrapR( Wrap wrap, Target target );
+		static void active( GLenum num );
+		static size_t getMaxCountActiveTextures() noexcept;
+		static void texImage2D( Target target, GLint level, Format internalformat, GLsizei width, GLsizei height, GLint border, Format format, DataType type, const void* pixels );
+		static void generateMipmap( Target target );
+
+	private:
+		static void requireBind( Target target );
+
+	private:
+		static struct BoundTexture
+		{
+			GLuint texture1d = 0;
+			GLuint texture2d = 0;
+			GLuint texture3d = 0;
+			GLuint texture1dArray = 0;
+			GLuint texture2dArray = 0;
+			GLuint textureRectangle = 0;
+			GLuint textureCubeMap = 0;
+			GLuint textureCubeMapArray = 0;
+			GLuint textureBuffer = 0;
+			GLuint texture2dMultisample = 0;
+			GLuint texture2dMultisampleArray = 0;
+
+			void setBuffer( Target target, GLuint buffer ) noexcept;
+			bool isSetBuffer( Target target ) noexcept;
+		} boundTexture_;
 	};
 };
