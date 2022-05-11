@@ -2,6 +2,7 @@
 #include "DebugActions.h"
 #include "Vbo.h"
 #include "Vao.h"
+#include "Texture2D.h"
 #include "Utils.h"
 #include "Image.h"
 
@@ -44,6 +45,18 @@ void launch()
 		 0.0f,  0.5f, 0.0f,   0.5f, 1.0f
 	};
 
+
+	Texture2D texture( true );
+	{
+		Image image( ASSETS_DIR_NAME + "/images/brickwall.jpg"s );
+		texture.setImage( image );
+	}
+	texture.setWrapS( Gl::Texture::Wrap::Repeat );
+	texture.setWrapT( Gl::Texture::Wrap::Repeat );
+	texture.setMinFilter( Gl::Texture::MinFilter::Nearest );
+	texture.setMagFilter( Gl::Texture::MagFilter::Nearest );
+	texture.generateMipmap();
+
 	Vbo vbo( Gl::Vbo::Target::Array, true );
 	vbo.bufferData( verticies, Gl::Vbo::DrawType::StaticDraw );
 
@@ -53,29 +66,6 @@ void launch()
 	Gl::vertexAttribPointer( 1, 2, Gl::DataType::Float, false, 5 * sizeof( float ), ( void* )( sizeof( float ) * 3 ) );
 	Gl::enableVertexAttribArray( 0 );
 	Gl::enableVertexAttribArray( 1 );
-
-	Image image( ASSETS_DIR_NAME + "/images/brickwall.jpg"s );
-	
-	GLuint texture = Gl::Texture::generate();
-	Gl::Texture::bind( Gl::Texture::Target::Texture2d, texture );
-
-	Gl::Texture::texImage2D( 
-		Gl::Texture::Target::Texture2d,
-		0,
-		Gl::Format::Rgb,
-		image.getWidth(),
-		image.getHeight(),
-		0,
-		Gl::Format::Rgb,
-		Gl::DataType::UnsignedByte,
-		image.data() );
-
-	Gl::Texture::setWrapS( Gl::Texture::Wrap::Repeat, Gl::Texture::Target::Texture2d );
-	Gl::Texture::setWrapT( Gl::Texture::Wrap::Repeat, Gl::Texture::Target::Texture2d );
-	Gl::Texture::setMinFilter( Gl::Texture::MinFilter::Nearest, Gl::Texture::Target::Texture2d );
-	Gl::Texture::setMagFilter( Gl::Texture::MagFilter::Nearest, Gl::Texture::Target::Texture2d );
-
-	Gl::Texture::generateMipmap( Gl::Texture::Target::Texture2d );
 
 	auto& wnd = Window::instance();
 	while ( wnd.isOpen() )
@@ -91,7 +81,6 @@ void launch()
 		#endif
 	}
 
-	Gl::Texture::deleteBuffer( texture );
 	Gl::deleteProgram( shaderProgram );
 }
 

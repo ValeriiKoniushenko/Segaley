@@ -190,8 +190,11 @@ void Gl::vertexAttribPointer( GLuint index, GLint size, DataType type, bool norm
 	glVertexAttribPointer( index, size, static_cast< GLenum >( type ), static_cast< GLboolean >( normalized ), stride, pointer );
 }
 
-void Gl::enableVertexAttribArray( GLuint index ) noexcept
+void Gl::enableVertexAttribArray( GLuint index )
 {
+	if ( !Vao::isBind() )
+		throw std::runtime_error( "Impossible to configure the vertex attribute array without a bound VAO. Try to bind a VAO and try again." );
+
 	glEnableVertexAttribArray( index );
 }
 

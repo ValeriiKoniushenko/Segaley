@@ -41,6 +41,21 @@ void Image::init_() noexcept
     channel_ = Channel::None;
 }
 
+Gl::Format Image::toGlFormat( Channel ch ) noexcept
+{
+    switch ( ch )
+    {
+    case Image::Channel::RGB:
+        return Gl::Format::Rgb;
+    case Image::Channel::RGBA:
+        return Gl::Format::Rgba;
+    }
+
+    throw std::runtime_error( "The GL format not found." );
+    
+    return Gl::Format::Green;
+}
+
 int Image::getWidth() const noexcept( false )
 {
     if( !data_ ) 

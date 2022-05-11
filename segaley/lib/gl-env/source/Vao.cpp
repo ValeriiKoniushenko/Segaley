@@ -11,6 +11,11 @@ Vao::Vao( bool isGenerateAndBind/* = false*/ ) noexcept
 	}
 }
 
+Vao::~Vao()
+{
+	release();
+}
+
 void Vao::generate()
 {
 	if ( !isEmpty() )
@@ -39,7 +44,7 @@ void Vao::reset() noexcept
 	Gl::Vao::reset();
 }
 
-void Vao::deleteBuffer() noexcept
+void Vao::release() noexcept
 {
 	Gl::Vao::deleteBuffer( id_ );
 }

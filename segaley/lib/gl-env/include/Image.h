@@ -1,5 +1,6 @@
 #pragma once
 #include "glm/glm.hpp"
+#include "Gl.h"
 
 #include <filesystem>
 
@@ -25,6 +26,8 @@ public:
 	Image& operator=( Image&& obj )	noexcept;
 
 	~Image();
+
+	static Gl::Format toGlFormat( Channel ch ) noexcept;
 
 	int	getWidth() const noexcept( false );
 	int	getHeight() const noexcept( false );
