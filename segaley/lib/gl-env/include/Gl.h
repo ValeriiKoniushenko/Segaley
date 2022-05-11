@@ -168,6 +168,7 @@ public:
 		static void bind( Target target, GLuint buffer ) noexcept;
 		static void bufferData( Target target, GLsizeiptr size, const void* data, DrawType drawType );
 		static void deleteBuffer( GLuint buffer ) noexcept;
+		static bool isSetBuffer( Target target );
 
 	private:
 		static struct BoundBuffer final
@@ -267,6 +268,8 @@ public:
 		static size_t getMaxCountActiveTextures() noexcept;
 		static void texImage2D( Target target, GLint level, Format internalformat, GLsizei width, GLsizei height, GLint border, Format format, DataType type, const void* pixels );
 		static void generateMipmap( Target target );
+
+		static bool isSetBuffer( Target target );
 
 	private:
 		static void requireBind( Target target );

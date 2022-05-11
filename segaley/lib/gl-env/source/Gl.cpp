@@ -252,6 +252,11 @@ void Gl::Vbo::deleteBuffer( GLuint buffer ) noexcept
 	glDeleteBuffers( 1, &buffer );
 }
 
+bool Gl::Vbo::isSetBuffer( Target target )
+{
+	return bound_.isSetBuffer( target );
+}
+
 void Gl::Vbo::BoundBuffer::setBuffer( Target target, GLuint buffer )
 {
 	switch ( target )
@@ -562,6 +567,11 @@ void Gl::Texture::generateMipmap( Target target )
 {
 	requireBind( target );
 	glGenerateMipmap( static_cast< GLenum >( target ) );
+}
+
+bool Gl::Texture::isSetBuffer( Target target )
+{
+	return boundTexture_.isSetBuffer( target );
 }
 
 void Gl::Texture::requireBind( Target target )

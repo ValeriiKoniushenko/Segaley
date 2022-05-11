@@ -1,6 +1,6 @@
 #include "Window.h"
 #include "DebugActions.h"
-#include "Gl.h"
+#include "Vbo.h"
 #include "Utils.h"
 #include "Image.h"
 
@@ -37,15 +37,14 @@ void launch()
 
 	Gl::useProgram( shaderProgram );
 
-	float verticies[] = {
+	std::vector< float > verticies = {
 		-0.5f, -0.5f, 0.0f,	  0.0f, 0.0f,
 		 0.5f, -0.5f, 0.0f,	  1.0f, 0.0f,
 		 0.0f,  0.5f, 0.0f,   0.5f, 1.0f
 	};
 
-	auto vbo = Gl::Vbo::generate();
-	Gl::Vbo::bind( Gl::Vbo::Target::Array, vbo );
-	Gl::Vbo::bufferData( Gl::Vbo::Target::Array, sizeof( verticies ), verticies, Gl::Vbo::DrawType::StaticDraw );
+	Vbo vbo( Gl::Vbo::Target::Array, true );
+	vbo.bufferData( verticies, Gl::Vbo::DrawType::StaticDraw );
 
 	GLuint vao = Gl::Vao::generate();
 	Gl::Vao::bind( vao );
@@ -94,7 +93,6 @@ void launch()
 
 	Gl::Texture::deleteBuffer( texture );
 	Gl::Vao::deleteBuffer( vao );
-	Gl::Vbo::deleteBuffer( vbo );
 	Gl::deleteProgram( shaderProgram );
 }
 
