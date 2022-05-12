@@ -3,6 +3,7 @@
 #include "Vbo.h"
 #include "Vao.h"
 #include "Texture2D.h"
+#include "Shader.h"
 #include "Utils.h"
 #include "Image.h"
 
@@ -10,34 +11,29 @@
 
 void launch()
 {
+	#ifdef DEBUG
 	DebugActions::copyAssets();
+	#endif
 
 	Window::instance();
 
 	using namespace std::string_literals;
 
-	auto vertexShader = Gl::createShader( Gl::Shader::Vertex );
-	auto vertexShaderSource = utils::getFileContent( ASSETS_DIR_NAME + "/shaders/main.vert"s );
-	Gl::shaderSource( vertexShader, 1, vertexShaderSource );
-	Gl::compileShader( vertexShader );
+	auto program = Gl::createProgram();
 
-	auto fragmentShader = Gl::createShader( Gl::Shader::Fragment );
-	auto fragmentShaderSource = utils::getFileContent( ASSETS_DIR_NAME + "/shaders/main.frag"s );
-	Gl::shaderSource( fragmentShader, 1, fragmentShaderSource );
-	Gl::compileShader( fragmentShader );
+	Shader fragmentShader( Gl::Shader::Vertex, program );
+	fragmentShader.loadFromFile( ASSETS_DIR_NAME + "/shaders/main.vert"s );
+	fragmentShader.compile();
 
-	auto shaderProgram = Gl::createProgram();
+	Shader vertexShader( Gl::Shader::Fragment, program );
+	vertexShader.loadFromFile( ASSETS_DIR_NAME + "/shaders/main.frag"s );
+	vertexShader.compile();
 
-	Gl::attachShader( shaderProgram, vertexShader );
-	Gl::attachShader( shaderProgram, fragmentShader );
-	Gl::linkProgram( shaderProgram );
+	Gl::attachShader( program, vertexShader.data() );
+	Gl::attachShader( program, fragmentShader.data() );
+	Gl::linkProgram( program );
 
-	Gl::deleteShader( shaderProgram, vertexShader );
-	Gl::deleteShader( shaderProgram, fragmentShader );
-	Gl::detachShader( shaderProgram, vertexShader );
-	Gl::detachShader( shaderProgram, fragmentShader );
-
-	Gl::useProgram( shaderProgram );
+	Gl::useProgram( program );
 
 	Vbo vbo( Gl::Vbo::Target::Array, true );
 	Vao vao( true );
@@ -54,15 +50,7 @@ void launch()
 	texture.setWrapT( Gl::Texture::Wrap::Repeat );
 	texture.setMinFilter( Gl::Texture::MinFilter::Nearest );
 	texture.setMagFilter( Gl::Texture::MagFilter::Nearest );
-	texture.generateMipmap();
-
-	Texture2D texture2( true );
-	texture2.loadFromFile( ASSETS_DIR_NAME + "/images/gravel.jpg"s );
-	texture2.setWrapS( Gl::Texture::Wrap::Repeat );
-	texture2.setWrapT( Gl::Texture::Wrap::Repeat );
-	texture2.setMinFilter( Gl::Texture::MinFilter::Nearest );
-	texture2.setMagFilter( Gl::Texture::MagFilter::Nearest );
-	texture2.generateMipmap();	
+	texture.generateMipmap();	
 
 	Gl::vertexAttribPointer( 0, 3, Gl::DataType::Float, false, 5 * sizeof( float ), ( void* )0 );
 	Gl::vertexAttribPointer( 1, 2, Gl::DataType::Float, false, 5 * sizeof( float ), ( void* )( sizeof( float ) * 3 ) );
@@ -83,7 +71,7 @@ void launch()
 		#endif
 	}
 
-	Gl::deleteProgram( shaderProgram );
+	Gl::deleteProgram( program );
 }
 
 int main()
