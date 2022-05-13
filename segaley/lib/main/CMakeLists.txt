@@ -4,6 +4,8 @@ add_executable(
 	
 	${GLAD_PATH}/glad.c
 	source/main.cpp
+	include/Program.h
+	source/Program.cpp
 )
 
 target_link_libraries(
