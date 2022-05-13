@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Gl.h"
-#include "glm.hpp"
+#include "glm/glm.hpp"
 
 #include <filesystem>
 #include <unordered_map>
