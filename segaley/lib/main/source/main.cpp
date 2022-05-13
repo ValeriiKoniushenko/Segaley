@@ -3,6 +3,7 @@
 #include "Vbo.h"
 #include "Vao.h"
 #include "Texture2D.h"
+#include "ShaderProgram.h"
 #include "Shader.h"
 #include "Utils.h"
 #include "Image.h"
@@ -11,15 +12,9 @@
 
 void launch()
 {
-	#ifdef DEBUG
-	DebugActions::copyAssets();
-	#endif
-
-	Window::instance();
-
 	using namespace std::string_literals;
 
-	auto program = Gl::createProgram();
+	ShaderProgram program( true );
 
 	Shader fragmentShader( Gl::Shader::Vertex, program );
 	fragmentShader.loadFromFile( ASSETS_DIR_NAME + "/shaders/main.vert"s );
@@ -29,11 +24,11 @@ void launch()
 	vertexShader.loadFromFile( ASSETS_DIR_NAME + "/shaders/main.frag"s );
 	vertexShader.compile();
 
-	Gl::attachShader( program, vertexShader.data() );
-	Gl::attachShader( program, fragmentShader.data() );
-	Gl::linkProgram( program );
+	program.attachShader( fragmentShader );
+	program.attachShader( vertexShader );
+	program.link();
 
-	Gl::useProgram( program );
+	program.use();
 
 	Vbo vbo( Gl::Vbo::Target::Array, true );
 	Vao vao( true );
@@ -70,14 +65,18 @@ void launch()
 		Gl::requireValidGl();
 		#endif
 	}
-
-	Gl::deleteProgram( program );
 }
 
 int main()
 {
 	try
 	{
+		#ifdef DEBUG
+		DebugActions::copyAssets();
+		#endif
+
+		Window::instance();
+
 		launch();
 	}
 	catch ( const std::runtime_error& ex )

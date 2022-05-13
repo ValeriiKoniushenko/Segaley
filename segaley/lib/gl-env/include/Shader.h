@@ -4,10 +4,12 @@
 
 #include <filesystem>
 
+class ShaderProgram;
+
 class Shader final
 {
 public:
-	Shader( Gl::Shader type, GLuint program );
+	Shader( Gl::Shader type, ShaderProgram& program );
 	~Shader();
 	Shader( const Shader& ) = delete;
 	Shader( Shader&& ) = delete;

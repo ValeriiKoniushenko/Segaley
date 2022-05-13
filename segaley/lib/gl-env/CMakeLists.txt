@@ -6,6 +6,7 @@ add_library(
 	include/Glfw.h
 	include/Image.h
 	include/Shader.h
+	include/ShaderProgram.h
 	include/Texture2D.h
 	include/Vao.h
 	include/Vbo.h
@@ -15,6 +16,7 @@ add_library(
 	source/Glfw.cpp
 	source/Image.cpp
 	source/Shader.cpp
+	source/ShaderProgram.cpp
 	source/Texture2D.cpp
 	source/Vao.cpp
 	source/Vbo.cpp

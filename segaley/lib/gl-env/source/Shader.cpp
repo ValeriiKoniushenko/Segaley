@@ -1,10 +1,11 @@
 #include "Shader.h"
 
+#include "ShaderProgram.h"
 #include "Utils.h"
 
-Shader::Shader( Gl::Shader type, GLuint program ) :
+Shader::Shader( Gl::Shader type, ShaderProgram& program ) :
 	type_( type ),
-	program_( program )
+	program_( program.data() )
 {
 	id_ = Gl::createShader( type );
 }
