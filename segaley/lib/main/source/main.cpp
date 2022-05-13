@@ -47,10 +47,8 @@ void launch()
 	texture.setMagFilter( Gl::Texture::MagFilter::Nearest );
 	texture.generateMipmap();	
 
-	Gl::vertexAttribPointer( 0, 3, Gl::DataType::Float, false, 5 * sizeof( float ), ( void* )0 );
-	Gl::vertexAttribPointer( 1, 2, Gl::DataType::Float, false, 5 * sizeof( float ), ( void* )( sizeof( float ) * 3 ) );
-	Gl::enableVertexAttribArray( 0 );
-	Gl::enableVertexAttribArray( 1 );
+	program.vertexAttribPointer( "aPos", 3, Gl::DataType::Float, false, 5 * sizeof( float ), ( void* )0 );
+	program.vertexAttribPointer( "aTexturePos", 2, Gl::DataType::Float, false, 5 * sizeof( float ), ( void* )( sizeof( float ) * 3 ) );
 
 	auto& wnd = Window::instance();
 	while ( wnd.isOpen() )
@@ -82,6 +80,10 @@ int main()
 	catch ( const std::runtime_error& ex )
 	{
 		std::cout << "Fatal error: " << ex.what() << std::endl;
+	}
+	catch ( const std::out_of_range& ex )
+	{
+		std::cout << "Our of range: " << ex.what() << std::endl;
 	}
 
 	return 0;

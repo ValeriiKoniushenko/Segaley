@@ -31,6 +31,12 @@ bool ShaderProgram::isEmpty() const noexcept
 void ShaderProgram::link()
 {
 	Gl::linkProgram( id_ );
+	
+	for ( auto& attribute : Gl::getAtrributes( id_ ) )
+		attributes_.emplace( attribute.name, attribute.id );
+
+	for ( auto& uniform : Gl::getUniforms( id_ ) )
+		uniforms_.emplace( uniform.name, uniform.id );
 }
 
 void ShaderProgram::attachShader( Shader& shader )
@@ -53,9 +59,45 @@ void ShaderProgram::release()
 {
 	Gl::deleteProgram( id_ );
 	id_ = 0;
+	attributes_.clear();
+	uniforms_.clear();
 }
 
 GLuint ShaderProgram::data() noexcept
 {
 	return id_;
+}
+
+void ShaderProgram::vertexAttribPointer( const std::string& attribute, GLint size, Gl::DataType type, bool normalized, GLsizei stride, const void* pointer )
+{
+	auto attributeId = attributes_.at( attribute );
+
+	Gl::vertexAttribPointer(
+		attributeId,
+		size,
+		type,
+		normalized,
+		stride,
+		pointer
+	);
+
+	Gl::enableVertexAttribArray( attributeId );
+}
+
+void ShaderProgram::uniform( const std::string& name, float data )
+{
+	auto uniformId = uniforms_.at( name );
+	glUniform1f( uniformId, data );
+}
+
+void ShaderProgram::uniform( const std::string& name, glm::vec2 data )
+{
+	auto uniformId = uniforms_.at( name );
+	glUniform2f( uniformId, data.x, data.y );
+}
+
+void ShaderProgram::uniform( const std::string& name, glm::vec3 data )
+{
+	auto uniformId = uniforms_.at( name );
+	glUniform3f( uniformId, data.x, data.y, data.z );
 }

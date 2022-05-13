@@ -151,11 +151,14 @@ std::vector< Gl::Attribute > Gl::getAtrributes( GLuint program ) noexcept
 	attributes.resize( getProgramiv( program, Parameter::ActiveAttributes ) );
 	for ( GLuint i = 0; i < attributes.size(); ++i )
 	{
-		char name[ 128 ];
-		GLenum type;
-		glGetActiveAttrib( program, i, 128, nullptr, nullptr, &type, name );
+		char name[ 128 ]{};
+		GLenum type = 0;
+		GLsizei len = 0;
+		GLint size = 0;
+		glGetActiveAttrib( program, i, 128, &len, &size, &type, name );
 		attributes[ i ].name = name;
 		attributes[ i ].type = static_cast< DataType >( type );
+		attributes[ i ].id = i;
 	}
 
 	return attributes;
@@ -169,9 +172,12 @@ std::vector< Gl::Uniform > Gl::getUniforms( GLuint program ) noexcept
 	{
 		char name[ 128 ];
 		GLenum type;
-		glGetActiveUniform( program, i, 128, nullptr, nullptr, &type, name );
+		GLsizei len = 0;
+		GLint size = 0;
+		glGetActiveUniform( program, i, 128, &len, &size, &type, name );
 		uniforms[ i ].name = name;
 		uniforms[ i ].type = static_cast< DataType >( type );
+		uniforms[ i ].id = i;
 	}
 
 	return uniforms;

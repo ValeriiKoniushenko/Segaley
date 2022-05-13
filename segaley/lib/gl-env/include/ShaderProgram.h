@@ -1,8 +1,10 @@
 #pragma once
 
 #include "Gl.h"
+#include "glm.hpp"
 
 #include <filesystem>
+#include <unordered_map>
 
 class Shader;
 
@@ -23,7 +25,14 @@ public:
 	void use();
 	void release();
 	GLuint data() noexcept;
+	void vertexAttribPointer( const std::string& attribute, GLint size, Gl::DataType type, bool normalized, GLsizei stride, const void* pointer );
+	
+	void uniform( const std::string& name, float data );
+	void uniform( const std::string& name, glm::vec2 data );
+	void uniform( const std::string& name, glm::vec3 data );
 
 private:
 	GLuint id_ = 0;
+	std::unordered_map< std::string, GLuint > attributes_;
+	std::unordered_map< std::string, GLuint > uniforms_;
 };
