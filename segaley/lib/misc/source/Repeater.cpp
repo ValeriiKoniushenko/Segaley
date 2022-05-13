@@ -1,18 +1,18 @@
 #include "Repeater.h"
 
-Repeater::Repeater() :
+Repeater::Repeater() noexcept :
 	freq_( 0. )
 {
 }
 
-Repeater::Repeater( callbackT callback, double freq ) noexcept( false ) :
+Repeater::Repeater( callbackT callback, double freq ) noexcept :
 	freq_( 0. )
 {
 	setFreq( freq );
 	setCallback( callback );
 }
 
-void Repeater::setFreq( double freq ) noexcept( false )
+void Repeater::setFreq( double freq )
 {
 	if ( freq <= 0. )
 		throw std::runtime_error( "Repeater's frequency can't be less\\equal then\\of 0" );
@@ -20,22 +20,22 @@ void Repeater::setFreq( double freq ) noexcept( false )
 	freq_ = freq;
 }
 
-double Repeater::getFreq() const
+double Repeater::getFreq() const noexcept
 {
 	return freq_;
 }
 
-void Repeater::setCallback( callbackT callback )
+void Repeater::setCallback( callbackT callback ) noexcept
 {
 	callback_ = callback;
 }
 
-void Repeater::release()
+void Repeater::release() noexcept
 {
 	callback_ = nullptr;
 }
 
-void Repeater::update()
+void Repeater::update() noexcept
 {
 	using namespace std;
 	using namespace std::chrono;

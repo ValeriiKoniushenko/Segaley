@@ -9,8 +9,8 @@ public:
     using callbackT = std::function<void()>;
 
 public:
-    Repeater();
-    Repeater( callbackT callback, double freq = 1.0 ) noexcept( false );
+    Repeater() noexcept;
+    Repeater( callbackT callback, double freq = 1.0 ) noexcept;
 
     ~Repeater() = default;
     Repeater( const Repeater& ) = delete;
@@ -18,11 +18,11 @@ public:
     Repeater& operator=( const Repeater& ) = delete;
     Repeater& operator=( Repeater&& ) = delete;
 
-    void setFreq( double freq ) noexcept( false );
-    double getFreq() const;
-    void setCallback( callbackT callback );
-    void release();
-    void update();
+    void setFreq( double freq );
+    double getFreq() const noexcept;
+    void setCallback( callbackT callback ) noexcept;
+    void release() noexcept;
+    void update() noexcept;
 
 private:
     std::chrono::system_clock::time_point lastTime_;
