@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ShaderProgram.h"
+#include "MainShader.h"
 
 class Program final
 {
@@ -21,5 +21,5 @@ private:
 	void setUpShaders();
 
 private:
-	ShaderProgram program_;
+	MainShader program_;
 };

@@ -12,7 +12,7 @@ class ShaderProgram
 {
 public:
 	ShaderProgram( bool isCreate = false );
-	~ShaderProgram();
+	virtual ~ShaderProgram();
 	ShaderProgram( const ShaderProgram& ) = delete;
 	ShaderProgram( ShaderProgram&& ) = delete;
 	ShaderProgram& operator=( const ShaderProgram& ) = delete;
@@ -22,7 +22,7 @@ public:
 	bool isEmpty() const noexcept;
 	void link();
 	void attachShader( Shader& shader );
-	void use() const;
+	virtual void use() const;
 	void release();
 	GLuint data() noexcept;
 	void vertexAttribPointer( const std::string& attribute, GLint size, Gl::DataType type, bool normalized, GLsizei stride, const void* pointer );

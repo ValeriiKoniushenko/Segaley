@@ -46,9 +46,6 @@ void Program::draw()
 		sprite.rotate( 0.001f );
 		sprite.move( { 0.001f, 0.f } );
 		
-		glEnable( GL_CULL_FACE );
-		glCullFace( GL_FRONT );
-
 		sprite.draw( program_ );
 
 		postDraw();

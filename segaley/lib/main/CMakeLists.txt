@@ -14,4 +14,5 @@ target_link_libraries(
 	${GLFW_PATH}/lib/glfw3dll.lib
 	gl-env
 	misc
+	shaders
 )

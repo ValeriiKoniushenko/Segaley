@@ -29,7 +29,7 @@ void Sprite::draw( ShaderProgram& program )
 	program.uniform( "uProjection", projection );
 	program.uniform( "uModel", model );
 	program.uniform( "uView", view );
-
+	
 	Gl::drawArrays( Gl::DrawMode::Triangles, 0, 6 );
 }
 
