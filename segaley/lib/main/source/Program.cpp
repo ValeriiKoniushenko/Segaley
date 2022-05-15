@@ -6,6 +6,7 @@
 #include "Shader.h"
 #include "Utils.h"
 #include "Image.h"
+#include "Sprite.h"
 
 #include "Program.h"
 
@@ -28,34 +29,27 @@ void Program::draw()
 {
 	using namespace std::string_literals;
 
-	Vbo vbo( Gl::Vbo::Target::Array, true );
-	Vao vao( true );
 
-	vbo.bufferData( std::vector< float >{
-		-0.5f, -0.5f, 0.0f,   0.0f, 0.0f,
-		0.5f,  -0.5f, 0.0f,   1.0f, 0.0f,
-		0.0f,  0.5f,  0.0f,   0.5f, 1.0f
-	}, Gl::Vbo::DrawType::StaticDraw );
+	Sprite::setConfigureShaderCallback( []( auto& program ) {
+		program.vertexAttribPointer( "aPos", 3, Gl::DataType::Float, false, 5 * sizeof( float ), ( void* )0 );
+		program.vertexAttribPointer( "aTexturePos", 2, Gl::DataType::Float, false, 5 * sizeof( float ), ( void* )( sizeof( float ) * 3 ) );
+	} );
 
 	Texture2D texture( true );
-	texture.loadFromFile( ASSETS_DIR_NAME + "/images/brickwall.jpg"s );
-	texture.setWrapS( Gl::Texture::Wrap::Repeat );
-	texture.setWrapT( Gl::Texture::Wrap::Repeat );
-	texture.setMinFilter( Gl::Texture::MinFilter::Nearest );
-	texture.setMagFilter( Gl::Texture::MagFilter::Nearest );
-	texture.generateMipmap();
+	texture.loadFromFile( ASSETS_DIR_NAME + "/images/brickwall.jpg"s );	
 
-	program_.vertexAttribPointer( "aPos", 3, Gl::DataType::Float, false, 5 * sizeof( float ), ( void* )0 );
-	program_.vertexAttribPointer( "aTexturePos", 2, Gl::DataType::Float, false, 5 * sizeof( float ), ( void* )( sizeof( float ) * 3 ) );
-	program_.use();
-
-	auto& wnd = Window::instance();
-
-	while ( wnd.isOpen() )
+	Sprite sprite;
+	sprite.setTexture2D( texture );
+	while ( Window::instance().isOpen() )
 	{
 		preDraw();
+		sprite.rotate( 0.001f );
+		sprite.move( { 0.001f, 0.f } );
+		
+		glEnable( GL_CULL_FACE );
+		glCullFace( GL_FRONT );
 
-		Gl::drawArrays( Gl::DrawMode::Triangles, 0, 3 );
+		sprite.draw( program_ );
 
 		postDraw();
 	}

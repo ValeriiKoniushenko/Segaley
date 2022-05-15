@@ -19,7 +19,7 @@ public:
 	void bind() noexcept;
 	bool isBind() noexcept;
 	void reset() noexcept;
-	void release(  ) noexcept;
+	void release() noexcept;
 
 	void setMinFilter( Gl::Texture::MinFilter filter );
 	void setMagFilter( Gl::Texture::MagFilter filter );

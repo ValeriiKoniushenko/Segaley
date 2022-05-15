@@ -8,7 +8,7 @@
 
 class Shader;
 
-class ShaderProgram final
+class ShaderProgram
 {
 public:
 	ShaderProgram( bool isCreate = false );
@@ -22,7 +22,7 @@ public:
 	bool isEmpty() const noexcept;
 	void link();
 	void attachShader( Shader& shader );
-	void use();
+	void use() const;
 	void release();
 	GLuint data() noexcept;
 	void vertexAttribPointer( const std::string& attribute, GLint size, Gl::DataType type, bool normalized, GLsizei stride, const void* pointer );
@@ -30,6 +30,8 @@ public:
 	void uniform( const std::string& name, float data );
 	void uniform( const std::string& name, glm::vec2 data );
 	void uniform( const std::string& name, glm::vec3 data );
+	void uniform( const std::string& name, const glm::mat3& data );
+	void uniform( const std::string& name, const glm::mat4& data );
 
 private:
 	GLuint id_ = 0;

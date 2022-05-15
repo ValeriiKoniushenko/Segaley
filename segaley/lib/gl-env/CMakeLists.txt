@@ -7,6 +7,7 @@ add_library(
 	include/Image.h
 	include/Shader.h
 	include/ShaderProgram.h
+	include/Sprite.h
 	include/Texture2D.h
 	include/Vao.h
 	include/Vbo.h
@@ -17,6 +18,7 @@ add_library(
 	source/Image.cpp
 	source/Shader.cpp
 	source/ShaderProgram.cpp
+	source/Sprite.cpp
 	source/Texture2D.cpp
 	source/Vao.cpp
 	source/Vbo.cpp

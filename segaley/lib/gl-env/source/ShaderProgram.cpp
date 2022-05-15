@@ -1,6 +1,7 @@
 #include "ShaderProgram.h"
 
 #include "Shader.h"
+#include "glm/gtc/type_ptr.hpp"
 
 #include <stdexcept>
 
@@ -47,7 +48,7 @@ void ShaderProgram::attachShader( Shader& shader )
 	Gl::attachShader( id_, shader.data() );
 }
 
-void ShaderProgram::use()
+void ShaderProgram::use() const
 {
 	if ( isEmpty() )
 		throw std::runtime_error( "Impossible to use not created shader program" );
@@ -100,4 +101,16 @@ void ShaderProgram::uniform( const std::string& name, glm::vec3 data )
 {
 	auto uniformId = uniforms_.at( name );
 	glUniform3f( uniformId, data.x, data.y, data.z );
+}
+
+void ShaderProgram::uniform( const std::string& name, const glm::mat3& data )
+{
+	auto uniformId = uniforms_.at( name );
+	glUniformMatrix3fv( uniformId, 1, GL_FALSE, glm::value_ptr( data ) );
+}
+
+void ShaderProgram::uniform( const std::string& name, const glm::mat4& data )
+{
+	auto uniformId = uniforms_.at( name );
+	glUniformMatrix4fv( uniformId, 1, GL_FALSE, glm::value_ptr( data ) );
 }
