@@ -5,22 +5,22 @@
 #include "Gl.h"
 #include "ShaderProgram.h"
 #include "Texture2D.h"
+#include "Camera2D.h"
 #include "Window.h"
 #include "glm/gtc/matrix_transform.hpp"
 
 std::function< void( ShaderProgram& program ) > Sprite::configureShaderCallback_;
 
-void Sprite::draw( ShaderProgram& program )
+void Sprite::draw( ShaderProgram& program, const Camera2D& camera )
 {
 	configureShader( program );
 
 	auto wndSize = Window::instance().getSize();	
 	auto projection = glm::perspective( glm::radians( 75.0f ), wndSize.getRatio(), 0.1f, 10'000.0f);
 	auto model = glm::mat4( 1.0f );
-	auto view = glm::mat4( 1.0f );
+	auto view = camera.getMatrix();
 
 	view = glm::translate( view, glm::vec3( 0.f, 0.f, -140.f ) );
-	model = glm::translate( model, glm::vec3( 0.f, -size_, 0.f ) );
 	model = glm::translate( model, glm::vec3( position_, 0.f ) );
 	model = glm::rotate( model, rotation_, glm::vec3( 0.f, 0.f, 1.f ) );
 	model = glm::translate( model, glm::vec3( -origin_, 0.f ) );

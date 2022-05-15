@@ -37,12 +37,14 @@ include_directories(
 	${FREETYPE_PATH}/include
 	${BOOST_PATH}
 
+	segaley/lib/camera/include
 	segaley/lib/gl-env/include
 	segaley/lib/main/include
 	segaley/lib/misc/include
 	segaley/lib/shaders/include
 )
 
+add_subdirectory( segaley/lib/camera )
 add_subdirectory( segaley/lib/gl-env )
 add_subdirectory( segaley/lib/main )
 add_subdirectory( segaley/lib/misc )

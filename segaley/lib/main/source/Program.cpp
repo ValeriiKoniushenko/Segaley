@@ -7,6 +7,7 @@
 #include "Utils.h"
 #include "Image.h"
 #include "Sprite.h"
+#include "Camera2D.h"
 
 #include "Program.h"
 
@@ -29,11 +30,12 @@ void Program::draw()
 {
 	using namespace std::string_literals;
 
-
 	Sprite::setConfigureShaderCallback( []( auto& program ) {
 		program.vertexAttribPointer( "aPos", 3, Gl::DataType::Float, false, 5 * sizeof( float ), ( void* )0 );
 		program.vertexAttribPointer( "aTexturePos", 2, Gl::DataType::Float, false, 5 * sizeof( float ), ( void* )( sizeof( float ) * 3 ) );
 	} );
+
+	Camera2D camera;
 
 	Texture2D texture( true );
 	texture.loadFromFile( ASSETS_DIR_NAME + "/images/brickwall.jpg"s );	
@@ -42,11 +44,10 @@ void Program::draw()
 	sprite.setTexture2D( texture );
 	while ( Window::instance().isOpen() )
 	{
+		camera.rotate( 0.0001f );
 		preDraw();
-		sprite.rotate( 0.001f );
-		sprite.move( { 0.001f, 0.f } );
 		
-		sprite.draw( program_ );
+		sprite.draw( program_, camera );
 
 		postDraw();
 	}
