@@ -11,9 +11,13 @@
 
 #include "Program.h"
 
+#include <iostream>
+
 void Program::launch()
 {
 	setUpShaders();
+
+	Window::instance().disableCursor();
 
 	draw();
 }
@@ -37,6 +41,17 @@ void Program::draw()
 
 	Camera3D camera;
 
+	Window::instance().setMousePosEventCallback( [ &camera ]( float x, float y ){
+		static auto last = glm::vec2( x, y );
+
+		auto delta = glm::vec2( x, y ) - last;
+		delta /= glm::vec2( 400.f, 500.f );
+
+		camera.rotate( { delta.y, delta.x } );
+
+		last = glm::vec2( x, y );
+	} );
+
 	Texture2D texture( true );
 	texture.loadFromFile( ASSETS_DIR_NAME + "/images/brickwall.jpg"s );	
 
@@ -46,7 +61,7 @@ void Program::draw()
 	while ( Window::instance().isOpen() )
 	{
 		preDraw();
-		camera.yaw( 0.0001f );
+
 		sprite.draw( program_, camera );
 
 		postDraw();
