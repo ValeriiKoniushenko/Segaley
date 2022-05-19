@@ -20,7 +20,8 @@ public:
 	Camera3D& operator=( const Camera3D& ) = delete;
 	Camera3D& operator=( Camera3D&& ) = delete;
 
-	glm::mat4 getMatrix() const override;
+	glm::mat4 getViewMatrix() const override;
+	glm::mat4 getProjectionMatrix() const override;
 
 	void setPosition( glm::vec3 size ) noexcept;
 	void move( glm::vec3 size ) noexcept;

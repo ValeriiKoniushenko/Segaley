@@ -1,8 +1,10 @@
 #include "Camera2D.h"
 
+#include "Window.h"
+
 #include "glm/gtc/matrix_transform.hpp"
 
-glm::mat4 Camera2D::getMatrix() const
+glm::mat4 Camera2D::getViewMatrix() const
 {
 	auto view = glm::mat4( 1.0f );
 
@@ -10,6 +12,12 @@ glm::mat4 Camera2D::getMatrix() const
 	view = glm::rotate( view, -rotation_, glm::vec3( 0.f, 0.f, 1.f ) );
 
 	return view;
+}
+
+glm::mat4 Camera2D::getProjectionMatrix() const
+{
+	auto wndSize = Window::instance().getSize();
+	return glm::perspective( glm::radians( 75.0f ), wndSize.getRatio(), 0.1f, 10'000.0f );
 }
 
 void Camera2D::setPosition( glm::vec2 size ) noexcept

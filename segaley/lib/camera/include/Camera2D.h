@@ -12,7 +12,8 @@ public:
 	Camera2D& operator=( const Camera2D& ) = delete;
 	Camera2D& operator=( Camera2D&& ) = delete;
 	
-	glm::mat4 getMatrix() const override;
+	glm::mat4 getViewMatrix() const override;
+	glm::mat4 getProjectionMatrix() const override;
 
 	void setPosition( glm::vec2 size ) noexcept;
 	void move( glm::vec2 size ) noexcept;

@@ -46,7 +46,7 @@ void Program::draw()
 	while ( Window::instance().isOpen() )
 	{
 		preDraw();
-		
+		camera.yaw( 0.0001f );
 		sprite.draw( program_, camera );
 
 		postDraw();

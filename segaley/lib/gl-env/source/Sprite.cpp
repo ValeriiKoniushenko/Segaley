@@ -15,10 +15,9 @@ void Sprite::draw( ShaderProgram& program, const Camera& camera )
 {
 	configureShader( program );
 
-	auto wndSize = Window::instance().getSize();	
-	auto projection = glm::perspective( glm::radians( 75.0f ), wndSize.getRatio(), 0.1f, 10'000.0f);
+	auto projection = camera.getProjectionMatrix();
 	auto model = glm::mat4( 1.0f );
-	auto view = camera.getMatrix();
+	auto view = camera.getViewMatrix();
 
 	view = glm::translate( view, glm::vec3( 0.f, 0.f, -700.f ) );
 	model = glm::translate( model, glm::vec3( position_, 0.f ) );
