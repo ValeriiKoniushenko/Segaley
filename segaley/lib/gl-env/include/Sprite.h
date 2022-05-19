@@ -9,7 +9,7 @@ class Vao;
 class Vbo;
 class ShaderProgram;
 class Texture2D;
-class Camera2D;
+class Camera;
 
 class Sprite final
 {
@@ -21,7 +21,7 @@ public:
 	Sprite& operator=( const Sprite& ) = delete;
 	Sprite& operator=( Sprite&& ) = delete;
 
-	void draw( ShaderProgram& program, const Camera2D& camera );
+	void draw( ShaderProgram& program, const Camera& camera );
 	static void setConfigureShaderCallback( std::function< void( ShaderProgram& program ) > callback ) noexcept;
 	void setTexture2D( Texture2D& texture ) noexcept;
 

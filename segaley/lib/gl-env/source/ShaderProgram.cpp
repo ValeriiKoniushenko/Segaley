@@ -16,6 +16,25 @@ ShaderProgram::~ShaderProgram()
 	release();
 }
 
+void ShaderProgram::setup( std::filesystem::path pathToVertex, std::filesystem::path pathToFragment )
+{
+	release();
+
+	create();
+
+	Shader fragmentShader( Gl::Shader::Vertex, *this );
+	fragmentShader.loadFromFile( pathToVertex );
+	fragmentShader.compile();
+
+	Shader vertexShader( Gl::Shader::Fragment, *this );
+	vertexShader.loadFromFile( pathToFragment );
+	vertexShader.compile();
+
+	attachShader( fragmentShader );
+	attachShader( vertexShader );
+	link();
+}
+
 void ShaderProgram::create()
 {
 	if ( !isEmpty() )

@@ -7,7 +7,7 @@
 #include "Utils.h"
 #include "Image.h"
 #include "Sprite.h"
-#include "Camera2D.h"
+#include "Camera3D.h"
 
 #include "Program.h"
 
@@ -35,16 +35,16 @@ void Program::draw()
 		program.vertexAttribPointer( "aTexturePos", 2, Gl::DataType::Float, false, 5 * sizeof( float ), ( void* )( sizeof( float ) * 3 ) );
 	} );
 
-	Camera2D camera;
+	Camera3D camera;
 
 	Texture2D texture( true );
 	texture.loadFromFile( ASSETS_DIR_NAME + "/images/brickwall.jpg"s );	
 
 	Sprite sprite;
 	sprite.setTexture2D( texture );
+
 	while ( Window::instance().isOpen() )
 	{
-		camera.rotate( 0.0001f );
 		preDraw();
 		
 		sprite.draw( program_, camera );
@@ -66,19 +66,5 @@ void Program::postDraw()
 void Program::setUpShaders()
 {
 	using namespace std::string_literals;
-
-	program_.create();
-
-	Shader fragmentShader( Gl::Shader::Vertex, program_ );
-	fragmentShader.loadFromFile( ASSETS_DIR_NAME + "/shaders/main.vert"s );
-	fragmentShader.compile();
-
-	Shader vertexShader( Gl::Shader::Fragment, program_ );
-	vertexShader.loadFromFile( ASSETS_DIR_NAME + "/shaders/main.frag"s );
-	vertexShader.compile();
-
-	program_.attachShader( fragmentShader );
-	program_.attachShader( vertexShader );
-	program_.link();
-
+	program_.setup( ASSETS_DIR_NAME + "/shaders/main.vert"s, ASSETS_DIR_NAME + "/shaders/main.frag"s );
 }

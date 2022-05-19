@@ -1,8 +1,8 @@
 #pragma once
 
-#include "glm/glm.hpp"
+#include "Camera.h"
 
-class Camera2D final
+class Camera2D final : public Camera
 {
 public:
 	Camera2D() = default;
@@ -12,7 +12,7 @@ public:
 	Camera2D& operator=( const Camera2D& ) = delete;
 	Camera2D& operator=( Camera2D&& ) = delete;
 	
-	glm::mat4 getMatrix() const;
+	glm::mat4 getMatrix() const override;
 
 	void setPosition( glm::vec2 size ) noexcept;
 	void move( glm::vec2 size ) noexcept;

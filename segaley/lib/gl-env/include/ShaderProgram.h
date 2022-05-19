@@ -18,6 +18,7 @@ public:
 	ShaderProgram& operator=( const ShaderProgram& ) = delete;
 	ShaderProgram& operator=( ShaderProgram&& ) = delete;
 
+	void setup( std::filesystem::path pathToVertex, std::filesystem::path pathToFragment );
 	void create();
 	bool isEmpty() const noexcept;
 	void link();
@@ -25,6 +26,7 @@ public:
 	virtual void use() const;
 	void release();
 	GLuint data() noexcept;
+	
 	void vertexAttribPointer( const std::string& attribute, GLint size, Gl::DataType type, bool normalized, GLsizei stride, const void* pointer );
 	
 	void uniform( const std::string& name, float data );
