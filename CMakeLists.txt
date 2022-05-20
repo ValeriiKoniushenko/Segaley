@@ -39,6 +39,7 @@ include_directories(
 
 	segaley/lib/camera/include
 	segaley/lib/gl-env/include
+	segaley/lib/input-devices/include
 	segaley/lib/main/include
 	segaley/lib/misc/include
 	segaley/lib/shaders/include
@@ -46,6 +47,7 @@ include_directories(
 
 add_subdirectory( segaley/lib/camera )
 add_subdirectory( segaley/lib/gl-env )
+add_subdirectory( segaley/lib/input-devices )
 add_subdirectory( segaley/lib/main )
 add_subdirectory( segaley/lib/misc )
 add_subdirectory( segaley/lib/shaders )
