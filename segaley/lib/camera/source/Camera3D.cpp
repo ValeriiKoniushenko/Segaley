@@ -26,9 +26,52 @@ void Camera3D::setPosition( glm::vec3 size ) noexcept
 	position_ = size;
 }
 
-void Camera3D::move( glm::vec3 size ) noexcept
+void Camera3D::move( glm::vec3 offset ) noexcept
 {
-	position_ += size;
+	if ( !checkMaxSpeed( impulse_ + offset ) )
+		impulse_ += offset;
+}
+
+void Camera3D::moveForward( float offset )
+{
+	auto tmp = offset * getForward();
+	if ( !checkMaxSpeed( tmp ) )
+		move( tmp );
+}
+
+void Camera3D::moveBackward( float offset )
+{
+	auto tmp = offset * -getForward();
+	if ( !checkMaxSpeed( tmp ) )
+		move( tmp );
+}
+
+void Camera3D::moveRight( float offset )
+{
+	auto tmp = offset * glm::cross( getForward(), getUp() );
+	if ( !checkMaxSpeed( tmp ) )
+		move( tmp );
+}
+
+void Camera3D::moveLeft( float offset )
+{
+	auto tmp = offset * -glm::cross( getForward(), getUp() );
+	if ( !checkMaxSpeed( tmp ) )
+		move( tmp );
+}
+
+void Camera3D::moveUp( float offset )
+{
+	auto tmp = offset * -getUp();
+	if ( !checkMaxSpeed( tmp ) )
+		move( tmp );
+}
+
+void Camera3D::moveDown( float offset )
+{
+	auto tmp = offset * getUp();
+	if ( !checkMaxSpeed( tmp ) )
+		move( tmp );
 }
 
 glm::vec3 Camera3D::getPosition() const noexcept
@@ -82,3 +125,35 @@ float Camera3D::getPitch() const noexcept
 	return rotation_.pitch;
 }
 
+glm::vec3 Camera3D::getForward() const noexcept
+{
+	const auto& r = rotation_;
+	return {
+		-sin( r.pitch ) * cos( r.yaw ),
+		sin( r.yaw ),
+		cos( r.pitch ) * cos( r.yaw )
+	};
+}
+
+glm::vec3 Camera3D::getUp() const noexcept
+{
+	return {
+		0.f,
+		1.f,
+		0.f
+	};
+}
+
+void Camera3D::updateImpulse() noexcept
+{
+	position_ += impulse_;
+	impulse_ *= glm::vec3( 0.001 );
+}
+
+bool Camera3D::checkMaxSpeed( glm::vec3 vec )
+{
+	if ( glm::length( impulse_ ) >= 10 )
+		return true;
+
+	return false;
+}

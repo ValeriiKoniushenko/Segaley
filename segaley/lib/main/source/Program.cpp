@@ -8,6 +8,7 @@
 #include "Image.h"
 #include "Sprite.h"
 #include "Camera3D.h"
+#include "Keyboard.h"
 
 #include "Program.h"
 
@@ -61,6 +62,20 @@ void Program::draw()
 	while ( Window::instance().isOpen() )
 	{
 		preDraw();
+
+		if ( Keyboard::isKeyPressed( Keyboard::Key::D ) )
+			camera.moveRight( 0.1 );
+		if ( Keyboard::isKeyPressed( Keyboard::Key::A ) )
+			camera.moveLeft( 0.1 );			
+		if ( Keyboard::isKeyPressed( Keyboard::Key::C ) )
+			camera.moveDown( 0.1 );
+		if ( Keyboard::isKeyPressed( Keyboard::Key::Space ) )
+			camera.moveUp( 0.1 );
+		if ( Keyboard::isKeyPressed( Keyboard::Key::S ) )
+			camera.moveBackward( 0.1 );
+		if ( Keyboard::isKeyPressed( Keyboard::Key::W ) )
+			camera.moveForward( 0.1 );
+		camera.updateImpulse();
 
 		sprite.draw( program_, camera );
 

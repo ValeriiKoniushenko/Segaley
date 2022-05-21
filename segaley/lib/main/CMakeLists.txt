@@ -13,6 +13,7 @@ target_link_libraries(
 	${GLFW_PATH}/lib/glfw3.lib
 	${GLFW_PATH}/lib/glfw3dll.lib
 	gl-env
+	input-devices
 	misc
 	shaders
 	camera
