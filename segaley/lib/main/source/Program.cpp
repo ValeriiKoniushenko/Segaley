@@ -8,7 +8,6 @@
 #include "Image.h"
 #include "Sprite.h"
 #include "Camera3D.h"
-#include "Keyboard.h"
 
 #include "Program.h"
 
@@ -19,6 +18,11 @@ void Program::launch()
 	setUpShaders();
 
 	Window::instance().disableCursor();
+
+	Sprite::setConfigureShaderCallback( []( auto& program ) {
+		program.vertexAttribPointer( "aPos", 3, Gl::DataType::Float, false, 5 * sizeof( float ), ( void* )0 );
+		program.vertexAttribPointer( "aTexturePos", 2, Gl::DataType::Float, false, 5 * sizeof( float ), ( void* )( sizeof( float ) * 3 ) );
+	} );
 
 	draw();
 }
@@ -34,11 +38,6 @@ void Program::preDraw()
 void Program::draw()
 {
 	using namespace std::string_literals;
-
-	Sprite::setConfigureShaderCallback( []( auto& program ) {
-		program.vertexAttribPointer( "aPos", 3, Gl::DataType::Float, false, 5 * sizeof( float ), ( void* )0 );
-		program.vertexAttribPointer( "aTexturePos", 2, Gl::DataType::Float, false, 5 * sizeof( float ), ( void* )( sizeof( float ) * 3 ) );
-	} );
 
 	Camera3D camera;
 
@@ -61,21 +60,10 @@ void Program::draw()
 
 	while ( Window::instance().isOpen() )
 	{
-		preDraw();
-
-		if ( Keyboard::isKeyPressed( Keyboard::Key::D ) )
-			camera.moveRight( 0.1 );
-		if ( Keyboard::isKeyPressed( Keyboard::Key::A ) )
-			camera.moveLeft( 0.1 );			
-		if ( Keyboard::isKeyPressed( Keyboard::Key::C ) )
-			camera.moveDown( 0.1 );
-		if ( Keyboard::isKeyPressed( Keyboard::Key::Space ) )
-			camera.moveUp( 0.1 );
-		if ( Keyboard::isKeyPressed( Keyboard::Key::S ) )
-			camera.moveBackward( 0.1 );
-		if ( Keyboard::isKeyPressed( Keyboard::Key::W ) )
-			camera.moveForward( 0.1 );
+		camera.updateControl();
 		camera.updateImpulse();
+
+		preDraw();
 
 		sprite.draw( program_, camera );
 

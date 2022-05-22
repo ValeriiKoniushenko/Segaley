@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Camera.h"
-
+#include "Keyboard.h"
 
 class Camera3D final : public Camera
 {
@@ -10,6 +10,16 @@ public:
 	{
 		float yaw = 0.f;
 		float pitch = 0.f;
+	};
+
+	struct ControlConfig
+	{
+		Keyboard::Key up = Keyboard::Key::Space;
+		Keyboard::Key down = Keyboard::Key::C;
+		Keyboard::Key left = Keyboard::Key::A;
+		Keyboard::Key right = Keyboard::Key::D;
+		Keyboard::Key forward = Keyboard::Key::W;
+		Keyboard::Key backward = Keyboard::Key::S;
 	};
 
 public:
@@ -48,7 +58,20 @@ public:
 	glm::vec3 getForward() const noexcept;
 	glm::vec3 getUp() const noexcept;
 
+	void updateControl() noexcept;
 	void updateImpulse() noexcept;
+
+	void setControlConfig( const ControlConfig& controlConfig ) noexcept;
+	ControlConfig getControlConfig() const noexcept;
+
+	void setSmoothLevel( float k );
+	float getSmoothLevel() const noexcept;
+
+	void setSpeed( float speed );
+	float getSpeed() const noexcept;
+
+	void setTopSpeed( float speed );
+	float getTopSpeed() const noexcept;
 
 private:
 	bool checkMaxSpeed( glm::vec3 vec );
@@ -56,5 +79,9 @@ private:
 private:
 	glm::vec3 position_ = glm::vec3( 0.f );
 	glm::vec3 impulse_ = glm::vec3( 0.f );
+	float smoothK_ = 0.995f;
+	float topSpeed_ = 0.1f;
+	float speed_ = 0.01f;
 	Rotation rotation_;
+	ControlConfig controlConfig_;
 };

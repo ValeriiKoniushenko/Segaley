@@ -3,6 +3,7 @@
 #include "Window.h"
 
 #include "glm/gtc/matrix_transform.hpp"
+#include <stdexcept>
 
 glm::mat4 Camera3D::getViewMatrix() const
 {
@@ -144,15 +145,82 @@ glm::vec3 Camera3D::getUp() const noexcept
 	};
 }
 
+void Camera3D::updateControl() noexcept
+{
+	if ( Keyboard::isKeyPressed( controlConfig_.right ) )
+		moveRight( speed_ );
+	if ( Keyboard::isKeyPressed( controlConfig_.left ) )
+		moveLeft( speed_ );
+	if ( Keyboard::isKeyPressed( controlConfig_.down ) )
+		moveDown( speed_ );
+	if ( Keyboard::isKeyPressed( controlConfig_.up ) )
+		moveUp( speed_ );
+	if ( Keyboard::isKeyPressed( controlConfig_.backward ) )
+		moveBackward( speed_ );
+	if ( Keyboard::isKeyPressed( controlConfig_.forward ) )
+		moveForward( speed_ );
+}
+
 void Camera3D::updateImpulse() noexcept
 {
 	position_ += impulse_;
-	impulse_ *= glm::vec3( 0.001 );
+	impulse_ *= glm::vec3( smoothK_ );
+}
+
+void Camera3D::setControlConfig( const ControlConfig& controlConfig ) noexcept
+{
+	controlConfig_ = controlConfig;
+}
+
+Camera3D::ControlConfig Camera3D::getControlConfig() const noexcept
+{
+	return controlConfig_;
+}
+
+void Camera3D::setSmoothLevel( float k )
+{
+	if ( k < 0.f )
+		throw std::runtime_error( "The camera's smooth level can not be less then 0.0" );
+	if ( k > 1.f )
+		throw std::runtime_error( "The camera's smooth level can not be greater then 1.0" );
+
+	smoothK_ = k;
+}
+
+float Camera3D::getSmoothLevel() const noexcept
+{
+	return smoothK_;
+}
+
+void Camera3D::setSpeed( float speed )
+{
+	if ( speed < 0.f )
+		throw std::runtime_error( "The camera's speed can not be less then 0.0" );
+
+	speed_ = speed;
+}
+
+float Camera3D::getSpeed() const noexcept
+{
+	return speed_;
+}
+
+void Camera3D::setTopSpeed( float speed )
+{
+	if ( speed < 0.f )
+		throw std::runtime_error( "The camera's top speed can not be less then 0.0" );
+
+	topSpeed_ = speed;
+}
+
+float Camera3D::getTopSpeed() const noexcept
+{
+	return topSpeed_;
 }
 
 bool Camera3D::checkMaxSpeed( glm::vec3 vec )
 {
-	if ( glm::length( impulse_ ) >= 10 )
+	if ( glm::length( impulse_ ) >= topSpeed_ )
 		return true;
 
 	return false;
