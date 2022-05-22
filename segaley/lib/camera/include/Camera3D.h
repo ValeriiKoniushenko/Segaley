@@ -74,7 +74,7 @@ public:
 	float getTopSpeed() const noexcept;
 
 private:
-	bool checkMaxSpeed( glm::vec3 vec );
+	bool checkTopSpeed( glm::vec3 vec );
 
 private:
 	glm::vec3 position_ = glm::vec3( 0.f );

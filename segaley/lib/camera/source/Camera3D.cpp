@@ -29,49 +29,49 @@ void Camera3D::setPosition( glm::vec3 size ) noexcept
 
 void Camera3D::move( glm::vec3 offset ) noexcept
 {
-	if ( !checkMaxSpeed( impulse_ + offset ) )
+	if ( !checkTopSpeed( impulse_ + offset ) )
 		impulse_ += offset;
 }
 
 void Camera3D::moveForward( float offset )
 {
 	auto tmp = offset * getForward();
-	if ( !checkMaxSpeed( tmp ) )
+	if ( !checkTopSpeed( tmp ) )
 		move( tmp );
 }
 
 void Camera3D::moveBackward( float offset )
 {
 	auto tmp = offset * -getForward();
-	if ( !checkMaxSpeed( tmp ) )
+	if ( !checkTopSpeed( tmp ) )
 		move( tmp );
 }
 
 void Camera3D::moveRight( float offset )
 {
 	auto tmp = offset * glm::cross( getForward(), getUp() );
-	if ( !checkMaxSpeed( tmp ) )
+	if ( !checkTopSpeed( tmp ) )
 		move( tmp );
 }
 
 void Camera3D::moveLeft( float offset )
 {
 	auto tmp = offset * -glm::cross( getForward(), getUp() );
-	if ( !checkMaxSpeed( tmp ) )
+	if ( !checkTopSpeed( tmp ) )
 		move( tmp );
 }
 
 void Camera3D::moveUp( float offset )
 {
 	auto tmp = offset * -getUp();
-	if ( !checkMaxSpeed( tmp ) )
+	if ( !checkTopSpeed( tmp ) )
 		move( tmp );
 }
 
 void Camera3D::moveDown( float offset )
 {
 	auto tmp = offset * getUp();
-	if ( !checkMaxSpeed( tmp ) )
+	if ( !checkTopSpeed( tmp ) )
 		move( tmp );
 }
 
@@ -218,7 +218,7 @@ float Camera3D::getTopSpeed() const noexcept
 	return topSpeed_;
 }
 
-bool Camera3D::checkMaxSpeed( glm::vec3 vec )
+bool Camera3D::checkTopSpeed( glm::vec3 vec )
 {
 	if ( glm::length( impulse_ ) >= topSpeed_ )
 		return true;
