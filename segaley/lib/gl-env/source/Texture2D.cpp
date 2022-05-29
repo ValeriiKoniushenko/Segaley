@@ -16,17 +16,31 @@ Texture2D::~Texture2D()
 	release();
 }
 
+Texture2D::Texture2D( Texture2D&& other ) noexcept
+{
+	*this = std::move( other );
+}
+
+Texture2D& Texture2D::operator=( Texture2D&& other ) noexcept
+{
+	id_ = other.id_;
+
+	other.id_ = 0;
+
+	return *this;
+}
+
 void Texture2D::generate()
 {
 	id_ = Gl::Texture::generate();
 }
 
-void Texture2D::bind() noexcept
+void Texture2D::bind() const noexcept
 {
 	Gl::Texture::bind( target_, id_ );
 }
 
-bool Texture2D::isBind() noexcept
+bool Texture2D::isBind() const noexcept
 {
 	return Gl::Texture::isBind( target_ );
 }
@@ -91,4 +105,9 @@ void Texture2D::loadFromFile( std::filesystem::path path )
 	image.loadImage( path );
 	setImage( image );
 	generateMipmap();
+}
+
+GLuint Texture2D::data() noexcept
+{
+	return id_;
 }

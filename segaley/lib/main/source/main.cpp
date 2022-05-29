@@ -8,7 +8,7 @@ int main()
 {
 	try
 	{
-		#ifdef DEBUG
+		#ifdef DEBUG_LVL
 		DebugActions::copyAssets();
 		#endif
 

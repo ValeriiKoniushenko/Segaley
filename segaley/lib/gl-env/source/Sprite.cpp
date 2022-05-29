@@ -24,6 +24,9 @@ void Sprite::draw( ShaderProgram& program, const Camera& camera )
 	model = glm::rotate( model, rotation_, glm::vec3( 0.f, 0.f, 1.f ) );
 	model = glm::translate( model, glm::vec3( -origin_, 0.f ) );
 
+	if ( texture_ )
+		texture_->bind();
+
 	program.use();
 	program.uniform( "uProjection", projection );
 	program.uniform( "uModel", model );

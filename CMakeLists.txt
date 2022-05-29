@@ -25,7 +25,8 @@ add_compile_definitions( ASSETS_SRC_PATH="${ASSETS_SRC_PATH}" )
 add_compile_definitions( ASSETS_DIR_NAME="${ASSETS_DIR_NAME}" )
 add_compile_definitions( CONFIGS_DIR_NAME="${CONFIGS_DIR_NAME}" )
 add_compile_definitions( CONFIGS_SRC_PATH="${CONFIGS_SRC_PATH}" )
-add_compile_definitions( DEBUG )
+add_compile_definitions( DEFAULT_FONT="C:/Windows/Fonts/arial.ttf" )
+add_compile_definitions( DEBUG_LVL )
 
 include_directories(
 	${GLAD_PATH}
@@ -38,16 +39,20 @@ include_directories(
 	${BOOST_PATH}
 
 	segaley/lib/camera/include
+	segaley/lib/font/include
 	segaley/lib/gl-env/include
 	segaley/lib/input-devices/include
 	segaley/lib/main/include
 	segaley/lib/misc/include
 	segaley/lib/shaders/include
+	dependencies/freetype-2.10.0/include
 )
 
 add_subdirectory( segaley/lib/camera )
+add_subdirectory( segaley/lib/font )
 add_subdirectory( segaley/lib/gl-env )
 add_subdirectory( segaley/lib/input-devices )
 add_subdirectory( segaley/lib/main )
 add_subdirectory( segaley/lib/misc )
 add_subdirectory( segaley/lib/shaders )
+add_subdirectory( dependencies/freetype-2.10.0 )

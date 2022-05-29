@@ -17,4 +17,6 @@ target_link_libraries(
 	misc
 	shaders
 	camera
+	freetype
+	font
 )

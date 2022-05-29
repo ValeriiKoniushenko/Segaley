@@ -22,4 +22,5 @@ private:
 
 private:
 	MainShader program_;
+	MainShader textProgram_;
 };
