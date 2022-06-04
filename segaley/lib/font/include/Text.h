@@ -33,6 +33,8 @@ public:
 	float getWidth() const noexcept;
 
 private:
+	void initGl( ShaderProgram& shader );
+
 	Font& font_;
 	std::string text_;
 	glm::vec2 position_ = glm::vec2( 0.f );
@@ -40,4 +42,5 @@ private:
 	Vao vao_;
 	Vbo vbo_;
 	RGB color_;
+	inline static const float globalSacle = 100.f;
 };

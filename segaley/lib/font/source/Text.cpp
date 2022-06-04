@@ -48,23 +48,7 @@ RGB Text::getColor() const noexcept
 
 void Text::draw( ShaderProgram& shader )
 {
-	static bool isInit = false;
-
-	if ( !isInit )
-	{
-		shader.use();
-
-		vbo_.generate();
-		vbo_.bind();
-		vbo_.bufferData( sizeof( float ) * 6 * 4, nullptr, Gl::Vbo::DrawType::DynamicDraw );
-
-		vao_.generate();
-		vao_.bind();
-
-		Gl::enableVertexAttribArray( 0 );
-		Gl::vertexAttribPointer( 0, 4, Gl::DataType::Float, false, 4 * sizeof( float ), 0 );
-		isInit = true;
-	}
+	initGl( shader );
 
 	shader.use();
 
@@ -82,7 +66,7 @@ void Text::draw( ShaderProgram& shader )
 	Gl::Texture::active( 0 );
 	vao_.bind();
 
-	auto scale = static_cast< float >( size_ ) / 100.f;
+	auto scale = static_cast< float >( size_ ) / globalSacle;
 	auto x = position_.x;
 	auto y = position_.y;
 
@@ -113,14 +97,12 @@ void Text::draw( ShaderProgram& shader )
 		Gl::drawArrays( Gl::DrawMode::Triangles, 0, 6 );
 		x += ( ch.advance >> 6 ) * scale;
 	}
-
-	glDisable( GL_BLEND );
 }
 
 float Text::getWidth() const noexcept
 {
 	float width = 0;
-	auto scale = static_cast< float >( size_ ) / 100.f;
+	auto scale = static_cast< float >( size_ ) / globalSacle;
 
 	for ( auto c : text_ )
 	{
@@ -129,4 +111,25 @@ float Text::getWidth() const noexcept
 	}
 
 	return width;
+}
+
+void Text::initGl( ShaderProgram& shader )
+{
+	static bool isInit = false;
+
+	if ( !isInit )
+	{
+		shader.use();
+
+		vbo_.generate();
+		vbo_.bind();
+		vbo_.bufferData( sizeof( float ) * 6 * 4, nullptr, Gl::Vbo::DrawType::DynamicDraw );
+
+		vao_.generate();
+		vao_.bind();
+
+		Gl::enableVertexAttribArray( 0 );
+		Gl::vertexAttribPointer( 0, 4, Gl::DataType::Float, false, 4 * sizeof( float ), 0 );
+		isInit = true;
+	}
 }
