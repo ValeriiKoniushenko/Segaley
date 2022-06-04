@@ -92,7 +92,7 @@ void Text::draw( ShaderProgram& shader )
 
 		ch.texture.bind();
 		vbo_.bind();
-		glBufferSubData( GL_ARRAY_BUFFER, 0, sizeof( vertices ), vertices );
+		vbo_.bufferSubData( 0, sizeof( vertices ), vertices );
 
 		Gl::drawArrays( Gl::DrawMode::Triangles, 0, 6 );
 		x += ( ch.advance >> 6 ) * scale;

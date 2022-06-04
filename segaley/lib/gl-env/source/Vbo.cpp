@@ -54,3 +54,8 @@ void Vbo::bufferData( GLsizeiptr size, const void* data, Gl::Vbo::DrawType drawT
 {
 	Gl::Vbo::bufferData( target_, size, data, drawType );
 }
+
+void Vbo::bufferSubData( GLintptr offset, GLsizeiptr size, const void* data )
+{
+	Gl::Vbo::bufferSubData( target_, offset, size, data );
+}

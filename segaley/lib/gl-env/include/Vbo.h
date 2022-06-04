@@ -21,7 +21,7 @@ public:
 	void reset() noexcept;
 	void release() noexcept;
 	void bufferData( GLsizeiptr size, const void* data, Gl::Vbo::DrawType drawType );
-	
+	void bufferSubData( GLintptr offset, GLsizeiptr size, const void* data );
 	template< class T >
 	void bufferData( const std::vector< T >& data, Gl::Vbo::DrawType drawType );
 

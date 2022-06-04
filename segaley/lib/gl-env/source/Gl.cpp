@@ -251,9 +251,17 @@ void Gl::Vbo::bind( Target target, GLuint buffer ) noexcept
 void Gl::Vbo::bufferData( Target target, GLsizeiptr size, const void* data, DrawType drawType )
 {
 	if ( !bound_.isSetBuffer( target ) )
-		throw std::runtime_error( "Can not to put data to the buffer without bound target. Try to bind a buffer and try again" );
+		throw std::runtime_error( "Can not put data to the buffer without bound target. Try to bind a buffer and try again" );
 
 	glBufferData( static_cast< GLenum >( target ), size, data, static_cast< GLenum >( drawType ) );
+}
+
+void Gl::Vbo::bufferSubData( Target target, GLintptr offset, GLsizeiptr size, const void* data )
+{
+	if ( !bound_.isSetBuffer( target ) )
+		throw std::runtime_error( "Can not put data to the buffer without bound target. Try to bind a buffer and try again" );
+
+	glBufferSubData( static_cast< GLenum >( target ), offset, size, data );
 }
 
 void Gl::Vbo::deleteBuffer( GLuint buffer ) noexcept

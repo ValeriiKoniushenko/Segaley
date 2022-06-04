@@ -167,6 +167,7 @@ public:
 		static GLuint generate() noexcept;
 		static void bind( Target target, GLuint buffer ) noexcept;
 		static void bufferData( Target target, GLsizeiptr size, const void* data, DrawType drawType );
+		static void bufferSubData( Target target, GLintptr offset, GLsizeiptr size, const void* data );
 		static void deleteBuffer( GLuint buffer ) noexcept;
 		static bool isSetBuffer( Target target );
 
