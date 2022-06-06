@@ -2,6 +2,7 @@
 
 #include "Gl.h"
 #include "glm/glm.hpp"
+#include "Color.h"
 
 #include <filesystem>
 #include <unordered_map>
@@ -32,6 +33,8 @@ public:
 	void uniform( const std::string& name, float data );
 	void uniform( const std::string& name, glm::vec2 data );
 	void uniform( const std::string& name, glm::vec3 data );
+	void uniform( const std::string& name, glm::vec4 data );
+	void uniform( const std::string& name, RGBAf color );
 	void uniform( const std::string& name, const glm::mat3& data );
 	void uniform( const std::string& name, const glm::mat4& data );
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "MainShader.h"
+#include "GuiShader.h"
 
 class Program final
 {
@@ -23,4 +24,5 @@ private:
 private:
 	MainShader program_;
 	MainShader textProgram_;
+	GuiShader guiShader_;
 };

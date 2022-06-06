@@ -122,6 +122,18 @@ void ShaderProgram::uniform( const std::string& name, glm::vec3 data )
 	glUniform3f( uniformId, data.x, data.y, data.z );
 }
 
+void ShaderProgram::uniform( const std::string& name, glm::vec4 data )
+{
+	auto uniformId = uniforms_.at( name );
+	glUniform4f( uniformId, data.x, data.y, data.z, data.w );
+}
+
+void ShaderProgram::uniform( const std::string& name, RGBAf data )
+{
+	auto uniformId = uniforms_.at( name );
+	glUniform4f( uniformId, data.r, data.g, data.b, data.a );
+}
+
 void ShaderProgram::uniform( const std::string& name, const glm::mat3& data )
 {
 	auto uniformId = uniforms_.at( name );

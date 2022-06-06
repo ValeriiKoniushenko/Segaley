@@ -33,5 +33,5 @@ private:
 template< class T >
 void Vbo::bufferData( const std::vector< T >& data, Gl::Vbo::DrawType drawType )
 {
-	Gl::Vbo::bufferData( target_, sizeof( T ) * data.size(), data.data(), drawType);
+	Gl::Vbo::bufferData( target_, sizeof( T ) * data.size(), data.data(), drawType );
 }
