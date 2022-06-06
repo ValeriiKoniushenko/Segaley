@@ -6,9 +6,8 @@
 namespace gui
 {
 
-Rectangle::Rectangle() : 
-	vbo_( Gl::Vbo::Target::Array )
-{ }
+Vao Rectangle::vao_;
+Vbo Rectangle::vbo_( Gl::Vbo::Target::Array );
 
 void Rectangle::draw( GuiShader& shader )
 {
@@ -40,12 +39,17 @@ void Rectangle::setTo( glm::vec2 from ) noexcept
 
 void Rectangle::setRect( FFRect rect ) noexcept
 {
-	rect_ = rect_;
+	rect_ = rect;
 }
 
 void Rectangle::setSize( FSize size ) noexcept
 {
 	rect_.size = size;
+}
+
+void Rectangle::setPosition( glm::vec2 position ) noexcept
+{
+	setFrom( position );
 }
 
 glm::vec2 Rectangle::getFrom() const noexcept
@@ -82,6 +86,11 @@ RGBA Rectangle::getColor() const noexcept
 FSize Rectangle::getSize() const noexcept
 {
 	return rect_.size;
+}
+
+glm::vec2 Rectangle::getPosition() const noexcept
+{
+	return getFrom();
 }
 
 void Rectangle::configureShader()

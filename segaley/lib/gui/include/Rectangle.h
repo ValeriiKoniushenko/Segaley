@@ -15,7 +15,7 @@ namespace gui
 class Rectangle
 {
 public:
-	Rectangle();
+	Rectangle() = default;
 	~Rectangle() = default;
 	Rectangle( const Rectangle& ) = default;
 	Rectangle( Rectangle&& ) = default;
@@ -28,10 +28,13 @@ public:
 	void setTo( glm::vec2 from ) noexcept;
 	void setRect( FFRect rect ) noexcept;
 	void setSize( FSize size ) noexcept;
+	void setPosition( glm::vec2 position ) noexcept;
+
 	glm::vec2 getFrom() const noexcept;
 	glm::vec2 getTo() const noexcept;
 	FFRect getRect() const noexcept;
 	FSize getSize() const noexcept;
+	glm::vec2 getPosition() const noexcept;
 
 	void setColor( RGBA rgba ) noexcept;
 	RGBA getColor() const noexcept;
@@ -41,8 +44,8 @@ private:
 
 private:
 	FFRect rect_ = { {}, { 100.f, 100.f } };
-	Vao vao_;
-	Vbo vbo_;
+	static Vao vao_;
+	static Vbo vbo_;
 	RGBA color_ = { 255, 0, 0, 255 };
 };
 

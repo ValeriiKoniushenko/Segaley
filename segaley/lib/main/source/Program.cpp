@@ -12,7 +12,7 @@
 #include "Camera3D.h"
 #include "Font.h"
 #include "Text.h"
-#include "Rectangle.h"
+#include "Frame.h"
 
 #include <iostream>
 #include <map>
@@ -68,8 +68,8 @@ void Program::draw()
 	Text text( font );
 	text.setString( "Hello world" );
 
-	gui::Rectangle rect;
-	rect.setSize( { 200.f, 400.f } );
+	gui::Frame frame;
+	frame.move( { 100.f, 100.f } );
 
 	while ( Window::instance().isOpen() )
 	{
@@ -80,7 +80,7 @@ void Program::draw()
 		sprite.draw( program_, camera );
 		
 		text.draw( textProgram_ );
-		rect.draw( guiShader_ );
+		frame.draw( guiShader_ );
 
 		postDraw();
 	}
