@@ -36,13 +36,13 @@ public:
 
 private:
 	FFRect rect_ = { {}, { 100.f, 100.f } };
-	RGBA color_ = { 255, 0, 0, 255 };
+	RGBA color_ = { 255, 255, 255, 255 };
 
-	float borderBottom_ = 10.f;
-	float borderTop_ = 10.f;
-	float borderLeft_ = 10.f;
-	float borderRight_ = 10.f;	
-	RGBA borderColor_ = { 255, 255, 0, 255 };
+	float borderBottom_ = 0.f;
+	float borderTop_ = 0.f;
+	float borderLeft_ = 0.f;
+	float borderRight_ = 0.f;
+	RGBA borderColor_ = { 0, 0, 0, 255 };
 
 	Rectangle main_;
 	Rectangle back_;

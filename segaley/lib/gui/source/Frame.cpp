@@ -106,6 +106,5 @@ void Frame::draw( GuiShader& shader )
 	main_.draw( shader );
 }
 
-
 }
 

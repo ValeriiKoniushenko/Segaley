@@ -59,7 +59,9 @@ void Text::draw( ShaderProgram& shader )
 	auto wndSize = Window::instance().getSize();
 	auto projection = glm::ortho( 0.0f, static_cast< float >( wndSize.width ), 
 		0.0f, static_cast< float >( wndSize.height ) );
-	shader.uniform( "projection", projection );
+	shader.uniform( "uProjection", projection );
+	shader.uniform( "uFontSize", size_ );
+	shader.uniform( "uResolution", glm::vec2( wndSize.width, wndSize.height ) );
 
 	auto color = Color::convertToF( color_ );
 	shader.uniform( "uTextColor", glm::vec3( color.r, color.g, color.b ) );
