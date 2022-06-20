@@ -6,3 +6,8 @@ add_library(
 
 	source/Keyboard.cpp
 )
+
+target_include_directories(
+	input-devices PUBLIC
+		include/
+)

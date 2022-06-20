@@ -23,7 +23,7 @@ int main()
 	}
 	catch ( const std::out_of_range& ex )
 	{
-		std::cout << "Our of range: " << ex.what() << std::endl;
+		std::cout << "Out of range: " << ex.what() << std::endl;
 	}
 
 	return 0;

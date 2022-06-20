@@ -22,8 +22,8 @@ public:
 	void setPosition( glm::vec2 position ) noexcept;
 	glm::vec2 getPosition() const noexcept;
 
-	void setSize( std::size_t size ) noexcept;
-	std::size_t getSize() const noexcept;
+	void setSize( float size ) noexcept;
+	float getSize() const noexcept;
 
 	void setColor( RGB color ) noexcept;
 	RGB getColor() const noexcept;
@@ -38,7 +38,7 @@ private:
 	Font& font_;
 	std::string text_;
 	glm::vec2 position_ = glm::vec2( 0.f );
-	std::size_t size_ = 48u;
+	float size_ = 48u;
 	Vao vao_;
 	Vbo vbo_;
 	RGB color_;

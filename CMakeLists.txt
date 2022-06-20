@@ -10,7 +10,6 @@ set( DEPENDENCIES_PATH ${CMAKE_CURRENT_SOURCE_DIR}/${DEPENDENCIES_DIR_NAME} )
 
 set( GLAD_PATH "${DEPENDENCIES_PATH}/GLAD" )
 set( GLEW_PATH "${DEPENDENCIES_PATH}/GLEW" )
-set( GLFW_PATH "${DEPENDENCIES_PATH}/GLFW" )
 set( GLM_PATH "${DEPENDENCIES_PATH}/GLM" )
 set( MISC_PATH "${DEPENDENCIES_PATH}/misc" )
 set( FREETYPE_PATH "${DEPENDENCIES_PATH}/freetype-2.11.1" )
@@ -31,22 +30,11 @@ add_compile_definitions( DEBUG_LVL )
 include_directories(
 	${GLAD_PATH}
 	${GLEW_PATH}/include
-	${GLFW_PATH}/include
 	${GLM_PATH}
 	${MISC_PATH}
 	${DEPENDS_PATH}
 	${FREETYPE_PATH}/include
 	${BOOST_PATH}
-
-	segaley/lib/camera/include
-	segaley/lib/font/include
-	segaley/lib/gl-env/include
-	segaley/lib/gui/include
-	segaley/lib/input-devices/include
-	segaley/lib/main/include
-	segaley/lib/misc/include
-	segaley/lib/shaders/include
-	dependencies/freetype-2.10.0/include
 )
 
 add_subdirectory( segaley/lib/camera )
@@ -58,3 +46,4 @@ add_subdirectory( segaley/lib/main )
 add_subdirectory( segaley/lib/misc )
 add_subdirectory( segaley/lib/shaders )
 add_subdirectory( dependencies/freetype-2.10.0 )
+add_subdirectory( dependencies/glfw-3.3.7 )

@@ -15,3 +15,8 @@ add_library(
 	source/Utils.cpp
 	source/WindowSize.cpp
 )
+
+target_include_directories(
+	misc PUBLIC
+		include/
+)

@@ -10,14 +10,16 @@ add_executable(
 
 target_link_libraries(
 	segaley PRIVATE
-	${GLFW_PATH}/lib/glfw3.lib
-	${GLFW_PATH}/lib/glfw3dll.lib
+	camera
 	gl-env
 	gui
 	input-devices
 	misc
 	shaders
-	camera
-	freetype
 	font
+)
+
+target_include_directories(
+	segaley PUBLIC
+		include/
 )

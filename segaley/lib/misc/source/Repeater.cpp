@@ -1,5 +1,7 @@
 #include "Repeater.h"
 
+#include <stdexcept>
+
 Repeater::Repeater() noexcept :
 	freq_( 0. )
 {

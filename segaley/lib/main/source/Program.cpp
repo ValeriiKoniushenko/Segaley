@@ -17,6 +17,14 @@
 #include <iostream>
 #include <map>
 
+template< const int size >
+struct Arr {
+	int arr[ size ]{};
+	void func()
+	{
+	}
+};
+
 void Program::launch()
 {
 	setUpShaders();

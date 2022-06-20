@@ -10,6 +10,11 @@ add_library(
 )
 
 target_link_libraries(
-	shaders PRIVATE
-	gl-env
+	shaders PUBLIC
+		gl-env
+)
+
+target_include_directories(
+	shaders PUBLIC
+		include/
 )

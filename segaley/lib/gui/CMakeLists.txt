@@ -8,3 +8,15 @@ add_library(
 	source/Rectangle.cpp
 	source/Frame.cpp
 )
+
+target_link_libraries(
+	gui PUBLIC
+		misc
+		gl-env
+		shaders
+)
+
+target_include_directories(
+	gui PUBLIC
+		include/
+)

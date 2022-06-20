@@ -130,8 +130,11 @@ else ()
   endif ()
 endif ()
 
+if (POLICY CMP0048)
+  cmake_policy(SET CMP0048 NEW)
+endif (POLICY CMP0048)
 
-project(freetype C)
+project(freetype)
 
 set(VERSION_MAJOR "2")
 set(VERSION_MINOR "10")
@@ -181,14 +184,6 @@ if (BUILD_FRAMEWORK)
   endif ()
   set(CMAKE_OSX_ARCHITECTURES "$(ARCHS_STANDARD_32_64_BIT)")
   set(BUILD_SHARED_LIBS ON)
-endif ()
-
-
-# Find dependencies
-if (FT_WITH_HARFBUZZ)
-  find_package(HarfBuzz 1.3.0 REQUIRED)
-else ()
-  find_package(HarfBuzz 1.3.0)
 endif ()
 
 if (FT_WITH_PNG)

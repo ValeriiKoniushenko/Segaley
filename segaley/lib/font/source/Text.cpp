@@ -26,12 +26,12 @@ glm::vec2 Text::getPosition() const noexcept
 	return position_;
 }
 
-void Text::setSize( std::size_t size ) noexcept
+void Text::setSize( float size ) noexcept
 {
 	size_ = size;
 }
 
-std::size_t Text::getSize() const noexcept
+float Text::getSize() const noexcept
 {
 	return size_;
 }
