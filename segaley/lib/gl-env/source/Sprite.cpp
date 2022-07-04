@@ -26,6 +26,8 @@ void Sprite::draw( ShaderProgram& program, const Camera& camera )
 
 	if ( texture_ )
 		texture_->bind();
+    else
+        Gl::Texture::reset( Gl::Texture::Target::Texture2d );
 
 	program.use();
 	program.uniform( "uProjection", projection );

@@ -9,7 +9,7 @@
 #include "Utils.h"
 #include "Image.h"
 #include "Sprite.h"
-#include "Camera3D.h"
+#include "Camera2D.h"
 #include "Font.h"
 #include "Text.h"
 #include "Frame.h"
@@ -51,24 +51,13 @@ void Program::draw()
 {
 	using namespace std::string_literals;
 
-	Camera3D camera;
-
-	Window::instance().setMousePosEventCallback( [ &camera ]( float x, float y ){
-		static auto last = glm::vec2( x, y );
-
-		auto delta = glm::vec2( x, y ) - last;
-		delta /= glm::vec2( 400.f, 500.f );
-
-		camera.rotate( { delta.y, delta.x } );
-
-		last = glm::vec2( x, y );
-	} );
+	Camera2D camera;
 
 	Texture2D texture( true );
 	texture.loadFromFile( ASSETS_DIR_NAME + "/images/brickwall.jpg"s );	
 
 	Sprite sprite;
-	sprite.setTexture2D( texture );
+	//sprite.setTexture2D( texture );
 
 	Font font;
 	font.loadFromFile( DEFAULT_FONT );
@@ -76,19 +65,12 @@ void Program::draw()
 	Text text( font );
 	text.setString( "Hello world" );
 
-	gui::Frame frame;
-	frame.move( { 100.f, 100.f } );
-
 	while ( Window::instance().isOpen() )
 	{
-		camera.updateControl();
-		camera.updateImpulse();
-
 		preDraw();
 		sprite.draw( program_, camera );
 		
 		text.draw( textProgram_ );
-		frame.draw( guiShader_ );
 
 		postDraw();
 	}

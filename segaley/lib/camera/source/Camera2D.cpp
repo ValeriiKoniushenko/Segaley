@@ -17,7 +17,7 @@ glm::mat4 Camera2D::getViewMatrix() const
 glm::mat4 Camera2D::getProjectionMatrix() const
 {
 	auto wndSize = Window::instance().getSize();
-	return glm::perspective( glm::radians( 75.0f ), wndSize.getRatio(), 0.1f, 10'000.0f );
+	return glm::ortho( 0.f, static_cast< float >( wndSize.width ), 0.f, static_cast< float >( wndSize.height ), 0.1f, 10'000.f );
 }
 
 void Camera2D::setPosition( glm::vec2 size ) noexcept
