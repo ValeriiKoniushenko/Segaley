@@ -31,7 +31,7 @@ void Program::launch()
 
 	Window::instance().disableCursor();
 
-	Sprite::setConfigureShaderCallback( []( auto& program ) {
+    guiShader_.setConfigureCallback( []( auto& program ) {
 		program.vertexAttribPointer( "aPos", 3, Gl::DataType::Float, false, 5 * sizeof( float ), ( void* )0 );
 		program.vertexAttribPointer( "aTexturePos", 2, Gl::DataType::Float, false, 5 * sizeof( float ), ( void* )( sizeof( float ) * 3 ) );
 	} );
@@ -51,26 +51,22 @@ void Program::draw()
 {
 	using namespace std::string_literals;
 
-	Camera2D camera;
-
 	Texture2D texture( true );
 	texture.loadFromFile( ASSETS_DIR_NAME + "/images/brickwall.jpg"s );	
 
-	Sprite sprite;
-	//sprite.setTexture2D( texture );
+    gui::Frame frame;
+    frame.setTexture2D( texture );
 
-	Font font;
-	font.loadFromFile( DEFAULT_FONT );
+	//Font font;
+	//font.loadFromFile( DEFAULT_FONT );
 
-	Text text( font );
-	text.setString( "Hello world" );
+	//Text text( font );
+	//text.setString( "Hello world" );
 
 	while ( Window::instance().isOpen() )
 	{
 		preDraw();
-		sprite.draw( program_, camera );
-		
-		text.draw( textProgram_ );
+        frame.draw( guiShader_ );
 
 		postDraw();
 	}

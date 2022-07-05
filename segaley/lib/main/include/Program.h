@@ -24,5 +24,5 @@ private:
 private:
 	MainShader program_;
 	MainShader textProgram_;
-	GuiShader guiShader_;
+	gui::GuiShader guiShader_;
 };

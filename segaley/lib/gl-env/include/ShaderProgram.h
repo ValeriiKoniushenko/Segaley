@@ -38,8 +38,16 @@ public:
 	void uniform( const std::string& name, const glm::mat3& data );
 	void uniform( const std::string& name, const glm::mat4& data );
 
+    void setConfigureCallback( std::function< void( ShaderProgram& program ) > callback ) noexcept;
+    void configure();
+
+private:
+    GLuint requireAttribute( const std::string& name );
+    GLuint requireUniform( const std::string& name );
+
 private:
 	GLuint id_ = 0;
 	std::unordered_map< std::string, GLuint > attributes_;
 	std::unordered_map< std::string, GLuint > uniforms_;
+    std::function< void( ShaderProgram& program ) > configureCallback_;
 };

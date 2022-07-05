@@ -22,7 +22,6 @@ public:
 	Sprite& operator=( Sprite&& ) = delete;
 
 	void draw( ShaderProgram& program, const Camera& camera );
-	static void setConfigureShaderCallback( std::function< void( ShaderProgram& program ) > callback ) noexcept;
 	void setTexture2D( Texture2D& texture ) noexcept;
 
 	void setSize( float size ) noexcept;
@@ -48,5 +47,4 @@ private:
 	glm::vec2 position_ = glm::vec2( 0.f );
 	glm::vec2 origin_ = glm::vec2( 0.f );
 	Texture2D* texture_ = nullptr;
-	static std::function< void( ShaderProgram& program ) > configureShaderCallback_;
 };

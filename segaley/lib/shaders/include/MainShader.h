@@ -1,3 +1,5 @@
+#pragma once
+
 #include "ShaderProgram.h"
 
 class MainShader final : public ShaderProgram

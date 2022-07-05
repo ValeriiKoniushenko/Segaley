@@ -1,11 +1,11 @@
 
 add_library(
 	shaders
-	
-	include/GuiShader.h	
+
+		include/GuiShader.h
 	include/MainShader.h
 
-	source/GuiShader.cpp
+		source/GuiShader.cpp
 	source/MainShader.cpp
 )
 

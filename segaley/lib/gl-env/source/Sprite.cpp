@@ -9,8 +9,6 @@
 #include "Window.h"
 #include "glm/gtc/matrix_transform.hpp"
 
-std::function< void( ShaderProgram& program ) > Sprite::configureShaderCallback_;
-
 void Sprite::draw( ShaderProgram& program, const Camera& camera )
 {
 	configureShader( program );
@@ -36,11 +34,6 @@ void Sprite::draw( ShaderProgram& program, const Camera& camera )
 	
 	Gl::drawArrays( Gl::DrawMode::Triangles, 0, 6 );
 }
-
-void Sprite::setConfigureShaderCallback( std::function< void( ShaderProgram& program ) > callback ) noexcept
-{
-	configureShaderCallback_ = callback;
-} 
 
 void Sprite::setTexture2D( Texture2D& texture ) noexcept
 {
@@ -125,7 +118,7 @@ void Sprite::configureShader( ShaderProgram& program )
 		else
 			Gl::Texture::bind( Gl::Texture::Target::Texture2d, 0 );
 
-		configureShaderCallback_( program );
+        program.configure();
 	}
 
 	vao.bind();

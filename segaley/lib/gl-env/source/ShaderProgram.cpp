@@ -90,7 +90,7 @@ GLuint ShaderProgram::data() noexcept
 
 void ShaderProgram::vertexAttribPointer( const std::string& attribute, GLint size, Gl::DataType type, bool normalized, GLsizei stride, const void* pointer )
 {
-	auto attributeId = attributes_.at( attribute );
+    auto attributeId = requireAttribute( attribute );
 
 	Gl::vertexAttribPointer(
 		attributeId,
@@ -106,42 +106,73 @@ void ShaderProgram::vertexAttribPointer( const std::string& attribute, GLint siz
 
 void ShaderProgram::uniform( const std::string& name, float data )
 {
-	auto uniformId = uniforms_.at( name );
+	auto uniformId = requireUniform( name );
 	glUniform1f( uniformId, data );
 }
 
 void ShaderProgram::uniform( const std::string& name, glm::vec2 data )
 {
-	auto uniformId = uniforms_.at( name );
+	auto uniformId = requireUniform( name );
 	glUniform2f( uniformId, data.x, data.y );
 }
 
 void ShaderProgram::uniform( const std::string& name, glm::vec3 data )
 {
-	auto uniformId = uniforms_.at( name );
+	auto uniformId = requireUniform( name );
 	glUniform3f( uniformId, data.x, data.y, data.z );
 }
 
 void ShaderProgram::uniform( const std::string& name, glm::vec4 data )
 {
-	auto uniformId = uniforms_.at( name );
+	auto uniformId = requireUniform( name );
 	glUniform4f( uniformId, data.x, data.y, data.z, data.w );
 }
 
 void ShaderProgram::uniform( const std::string& name, RGBAf data )
 {
-	auto uniformId = uniforms_.at( name );
+	auto uniformId = requireUniform( name );
 	glUniform4f( uniformId, data.r, data.g, data.b, data.a );
 }
 
 void ShaderProgram::uniform( const std::string& name, const glm::mat3& data )
 {
-	auto uniformId = uniforms_.at( name );
+	auto uniformId = requireUniform( name );
 	glUniformMatrix3fv( uniformId, 1, GL_FALSE, glm::value_ptr( data ) );
 }
 
 void ShaderProgram::uniform( const std::string& name, const glm::mat4& data )
 {
-	auto uniformId = uniforms_.at( name );
+	auto uniformId = requireUniform( name );
 	glUniformMatrix4fv( uniformId, 1, GL_FALSE, glm::value_ptr( data ) );
+}
+
+void ShaderProgram::setConfigureCallback( std::function< void( ShaderProgram& ) > callback ) noexcept
+{
+    configureCallback_ = callback;
+}
+
+void ShaderProgram::configure()
+{
+    if ( configureCallback_ )
+        configureCallback_( *this );
+    else
+        throw std::runtime_error( "Can not to run shader config. You should put the configure callback using the ShaderProgram::setConfigureCallback function." );
+}
+
+GLuint ShaderProgram::requireAttribute( const std::string& name )
+{
+    auto attr = attributes_.find( name );
+    if ( attr == attributes_.end() )
+        throw std::runtime_error( "Can not to find such attribute: " + name );
+
+    return attr->second;
+}
+
+GLuint ShaderProgram::requireUniform( const std::string& name )
+{
+    auto uniform = uniforms_.find( name );
+    if ( uniform == uniforms_.end() )
+        throw std::runtime_error( "Can not to find such uniform: " + name );
+
+    return uniform->second;
 }
