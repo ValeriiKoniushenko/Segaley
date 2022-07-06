@@ -40,12 +40,12 @@ void Sprite::setTexture2D( Texture2D& texture ) noexcept
 	texture_ = &texture;
 }
 
-void Sprite::setSize( float size ) noexcept
+void Sprite::setSize( glm::vec2 size ) noexcept
 {
 	size_ = size;
 }
 
-float Sprite::getSize() const noexcept
+glm::vec2 Sprite::getSize() const noexcept
 {
 	return size_;
 }
@@ -102,10 +102,10 @@ void Sprite::configureShader( ShaderProgram& program )
 		vbo.bind();
 		vbo.bufferData( std::vector< float >{
 			0.f,   0.f,   0.0f,    0.f, 0.f,
-			0.f,   size_, 0.0f,    0.f, 1.f,
-			size_, size_, 0.0f,    1.f, 1.f,
-			size_, size_, 0.0f,    1.f, 1.f,
-			size_, 0.f,   0.0f,    1.f, 0.f,
+			0.f,   size_.y, 0.0f,    0.f, 1.f,
+			size_.x, size_.y, 0.0f,    1.f, 1.f,
+			size_.x, size_.y, 0.0f,    1.f, 1.f,
+			size_.x, 0.f,   0.0f,    1.f, 0.f,
 			0.f,   0.f,   0.0f,    0.f, 0.f
 		}, Gl::Vbo::DrawType::StaticDraw );
 		isInit = true;

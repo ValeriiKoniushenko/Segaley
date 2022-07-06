@@ -24,8 +24,8 @@ public:
 	void draw( ShaderProgram& program, const Camera& camera );
 	void setTexture2D( Texture2D& texture ) noexcept;
 
-	void setSize( float size ) noexcept;
-	float getSize() const noexcept;
+	void setSize( glm::vec2 size ) noexcept;
+    glm::vec2 getSize() const noexcept;
 
 	void setPosition( glm::vec2 size ) noexcept;
 	void move( glm::vec2 size ) noexcept;
@@ -42,7 +42,7 @@ private:
 	void configureShader( ShaderProgram& program );
 
 private:
-	float size_ = 50.f;
+	glm::vec2 size_ = glm::vec2( 50.f, 50.f );
 	float rotation_ = 0.f;
 	glm::vec2 position_ = glm::vec2( 0.f );
 	glm::vec2 origin_ = glm::vec2( 0.f );
