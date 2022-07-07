@@ -22,9 +22,19 @@ public:
 	Frame& operator=( const Frame& ) = delete;
 	Frame& operator=( Frame&& ) = delete;
 
-	void setPosition( glm::vec2 position ) noexcept;
-	void move( glm::vec2 position ) noexcept;
-	glm::vec2 getPosition() const noexcept;
+    void setSize( glm::vec2 size ) noexcept;
+    glm::vec2 getSize() const noexcept;
+
+    void setPosition( glm::vec2 size ) noexcept;
+    void move( glm::vec2 size ) noexcept;
+    glm::vec2 getPosition() const noexcept;
+
+    void setOrigin( glm::vec2 origin ) noexcept;
+    glm::vec2 getOrigin() const noexcept;
+
+    void setRotation( float radian ) noexcept;
+    void rotate( float radian ) noexcept;
+    float getRotation() const noexcept;
 
 	void draw(GuiShader& shader );
 

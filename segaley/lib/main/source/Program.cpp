@@ -56,18 +56,19 @@ void Program::draw()
 
     gui::Frame frame;
     frame.setTexture2D( texture );
+    frame.move( { 100.f, 0.f } );
 
-	//Font font;
-	//font.loadFromFile( DEFAULT_FONT );
+    Font font;
+	font.loadFromFile( DEFAULT_FONT );
 
-	//Text text( font );
-	//text.setString( "Hello world" );
+	Text text( font );
+	text.setString( "Hello world" );
 
 	while ( Window::instance().isOpen() )
 	{
 		preDraw();
         frame.draw( guiShader_ );
-
+        text.draw( textProgram_ );
 		postDraw();
 	}
 }
