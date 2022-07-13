@@ -36,24 +36,25 @@ void Program::draw()
 {
 	using namespace std::string_literals;
 
-	Texture2D texture( true );
-	texture.loadFromFile( ASSETS_DIR_NAME + "/images/brickwall.jpg"s );	
+	Texture2D backTexture( true );
+	backTexture.loadFromFile( ASSETS_DIR_NAME + "/images/back.png"s );
+	Texture2D frontTexture( true );
+	frontTexture.loadFromFile( ASSETS_DIR_NAME + "/images/front.png"s );
 
     Font font;
 	font.loadFromFile( DEFAULT_FONT );
 
-    gui::TextLine frame;
-    frame.setFont( font );
-    frame.setTexture2D( texture );
-    frame.move( { 100.f, -100.f } );
-    frame.setString( "Hello world" );
-	frame.setSize( { 400.f, 400.f } );
-	frame.setTextHorizontalAlign( gui::TextLine::Align::Center );
+    gui::Frame back;
+	back.setTexture2D( backTexture );
+
+    gui::Frame front;
+	front.setTexture2D( frontTexture );
 
 	while ( Window::instance().isOpen() )
 	{
 		preDraw();
-        frame.draw( guiShader_, textProgram_ );
+		back.draw( guiShader_ );
+		front.draw( guiShader_ );
 
 		postDraw();
 	}
