@@ -1,29 +1,14 @@
 #include "Program.h"
 
 #include "Window.h"
-#include "DebugActions.h"
 #include "Vbo.h"
-#include "Vao.h"
 #include "Texture2D.h"
 #include "Shader.h"
-#include "Utils.h"
-#include "Image.h"
-#include "Sprite.h"
-#include "Camera2D.h"
 #include "Font.h"
 #include "Text.h"
-#include "Frame.h"
+#include "TextLine.h"
 
 #include <iostream>
-#include <map>
-
-template< const int size >
-struct Arr {
-	int arr[ size ]{};
-	void func()
-	{
-	}
-};
 
 void Program::launch()
 {
@@ -54,21 +39,22 @@ void Program::draw()
 	Texture2D texture( true );
 	texture.loadFromFile( ASSETS_DIR_NAME + "/images/brickwall.jpg"s );	
 
-    gui::Frame frame;
-    frame.setTexture2D( texture );
-    frame.move( { 100.f, 0.f } );
-
     Font font;
 	font.loadFromFile( DEFAULT_FONT );
 
-	Text text( font );
-	text.setString( "Hello world" );
+    gui::TextLine frame;
+    frame.setFont( font );
+    frame.setTexture2D( texture );
+    frame.move( { 100.f, -100.f } );
+    frame.setString( "Hello world" );
+	frame.setSize( { 400.f, 400.f } );
+	frame.setTextHorizontalAlign( gui::TextLine::Align::Center );
 
 	while ( Window::instance().isOpen() )
 	{
 		preDraw();
-        frame.draw( guiShader_ );
-        text.draw( textProgram_ );
+        frame.draw( guiShader_, textProgram_ );
+
 		postDraw();
 	}
 }

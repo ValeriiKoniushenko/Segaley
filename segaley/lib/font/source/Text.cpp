@@ -5,8 +5,7 @@
 
 #include "glm/gtc/matrix_transform.hpp"
 
-Text::Text( Font& font ) :
-	font_( font ),
+Text::Text() :
 	vbo_( Gl::Vbo::Target::Array )
 {
 }
@@ -14,6 +13,11 @@ Text::Text( Font& font ) :
 void Text::setString( const std::string& text ) noexcept
 {
 	text_ = text;
+}
+
+const std::string& Text::getString() const noexcept
+{
+    return text_;
 }
 
 void Text::setPosition( glm::vec2 position ) noexcept
@@ -74,7 +78,7 @@ void Text::draw( ShaderProgram& shader )
 
 	for ( auto c : text_ )
 	{
-		auto& ch = font_[ c ];
+		auto& ch = (*font_)[ c ];
 
 		float xpos = x + ch.bearing.x * scale;
 		float ypos = y - ( ch.size.y - ch.bearing.y ) * scale;
@@ -108,7 +112,7 @@ float Text::getWidth() const noexcept
 
 	for ( auto c : text_ )
 	{
-		auto& ch = font_[ c ];
+		auto& ch = (*font_)[ c ];
 		width += ( ch.advance >> 6 ) * scale;
 	}
 
@@ -134,4 +138,19 @@ void Text::initGl( ShaderProgram& shader )
 		Gl::vertexAttribPointer( 0, 4, Gl::DataType::Float, false, 4 * sizeof( float ), 0 );
 		isInit = true;
 	}
+}
+
+Font* Text::getFont() const
+{
+    return font_;
+}
+
+void Text::setFont( Font& font )
+{
+    font_ = &font;
+}
+
+void Text::move( glm::vec2 offset ) noexcept
+{
+	setPosition( getPosition() + offset );
 }
